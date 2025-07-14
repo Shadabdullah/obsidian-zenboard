@@ -1,0 +1,11 @@
+{
+  "id": "zentask",
+  "name": "ZenTask",
+  "version": "0.1.0",
+  "minAppVersion": "1.0.0",
+  "description": "A powerful task manager and planner inside Obsidian.",
+  "author": "Shad",
+  "authorUrl": "https://github.com/yourusername/zentask",
+  "fundingUrl": "https://github.com/sponsors/yourusername",
+  "isDesktopOnly": false
+}
