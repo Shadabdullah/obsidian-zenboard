@@ -9,6 +9,8 @@ import {
 	Setting
 } from 'obsidian';
 
+import { ZentaskDashboardView, VIEW_TYPE_ZENTASK } from './ZentaskView';
+
 // ✅ Plugin Settings Interface
 interface ZenTaskSettings {
 	defaultProject: string;
@@ -25,9 +27,15 @@ export default class ZenTaskPlugin extends Plugin {
 	async onload() {
 		await this.loadSettings();
 
-		// ✅ Ribbon Icon
-		const ribbonIconEl = this.addRibbonIcon('check-circle', 'ZenTask: Task Manager', (evt: MouseEvent) => {
-			new Notice('ZenTask is ready!');
+		// ✅ Register custom view
+		this.registerView(
+			VIEW_TYPE_ZENTASK,
+			(leaf) => new ZentaskDashboardView(leaf)
+		);
+
+		// ✅ Ribbon Icon to open React pane
+		const ribbonIconEl = this.addRibbonIcon('check-circle', 'ZenTask: Open Dashboard', async () => {
+			await this.activateDashboardView();
 		});
 		ribbonIconEl.addClass('zentask-ribbon-icon');
 
@@ -88,6 +96,7 @@ export default class ZenTaskPlugin extends Plugin {
 		console.log('ZenTask unloaded');
 	}
 
+	// ✅ Load & Save Plugin Settings
 	async loadSettings() {
 		this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
 	}
@@ -95,6 +104,21 @@ export default class ZenTaskPlugin extends Plugin {
 	async saveSettings() {
 		await this.saveData(this.settings);
 	}
+
+	// ✅ Activate React View Panel
+async activateDashboardView() {
+	console.log("🧠 activateDashboardView triggered");
+
+	const leaf = this.app.workspace.getLeaf(false); // main workspace
+	console.log("✅ Main workspace leaf found. Setting view state...");
+
+	await leaf.setViewState({
+		type: VIEW_TYPE_ZENTASK,
+		active: true,
+	});
+}
+
+
 }
 
 // ✅ Modal Class

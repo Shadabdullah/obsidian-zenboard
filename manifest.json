@@ -7,5 +7,6 @@
   "author": "Shad",
   "authorUrl": "https://github.com/yourusername/zentask",
   "fundingUrl": "https://github.com/sponsors/yourusername",
+  "main": "main.js",
   "isDesktopOnly": false
 }
