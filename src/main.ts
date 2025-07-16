@@ -99,7 +99,9 @@ export default class ZenTaskPlugin extends Plugin {
 	// ✅ Load & Save Plugin Settings
 	async loadSettings() {
 		this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
+
 	}
+
 
 	async saveSettings() {
 		await this.saveData(this.settings);
