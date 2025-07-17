@@ -1,7 +1,7 @@
 import { ItemView, WorkspaceLeaf } from "obsidian";
 import * as React from "react";
 import * as ReactDOM from "react-dom/client"; // ← ✅ use the modern API
-import App from "./ui/App";
+import App from "../app/App";
 
 export const VIEW_TYPE_ZENTASK = "zentask-view";
 

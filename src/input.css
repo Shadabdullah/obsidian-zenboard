@@ -1,5 +1,30 @@
 
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+
+.theme-border {
+  border-color: var(--divider-color, rgba(120, 120, 120, 0.2));
+}
+.theme-bg {
+  background-color: var(--background-primary);
+}
+.theme-bg-secondary {
+  background-color: var(--background-secondary);
+}
+.theme-text {
+  color: var(--text-normal);
+}
+.theme-text-faint {
+  color: var(--text-faint);
+}
+.theme-text-accent {
+  color: var(--text-accent);
+}
+.theme-border-accent {
+  border-color: var(--interactive-accent);
+}
 

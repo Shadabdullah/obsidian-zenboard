@@ -1,3 +1,4 @@
+
 import {
 	App,
 	Editor,
@@ -9,7 +10,7 @@ import {
 	Setting
 } from 'obsidian';
 
-import { ZentaskDashboardView, VIEW_TYPE_ZENTASK } from './ZentaskView';
+import { ZentaskDashboardView, VIEW_TYPE_ZENTASK } from './views/ZentaskView';
 
 // ✅ Plugin Settings Interface
 interface ZenTaskSettings {

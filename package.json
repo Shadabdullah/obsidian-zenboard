@@ -4,7 +4,7 @@
 	"description": "🧠 ZenTask – A powerful task, habit, and planner plugin for Obsidian with a React dashboard.",
 	"main": "main.js",
 	"scripts": {
-        "tw": "tailwindcss -i ./src/input.css -o ./styles.css --watch",
+		"tw": "tailwindcss -i ./src/input.css -o ./styles.css --watch",
 		"dev": "node esbuild.config.mjs",
 		"build": "tsc --noEmit --skipLibCheck && node esbuild.config.mjs production",
 		"version": "node version-bump.mjs && git add manifest.json versions.json"
@@ -34,6 +34,7 @@
 		"typescript": "4.7.4"
 	},
 	"dependencies": {
+		"lucide-react": "^0.525.0",
 		"react": "^18.3.1",
 		"react-dom": "^18.3.1"
 	}
