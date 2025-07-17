@@ -1,6 +1,8 @@
 
-const renderTodoPlanner = () => (
-  <div className="flex flex-col items-center justify-center h-64 bg-gray-50 rounded-xl border border-gray-200 relative overflow-hidden">
+import { CheckSquare , Clock, Sparkles } from 'lucide-react';
+
+const TodoView = () => {
+return (  <div className="flex flex-col items-center justify-center h-64 bg-gray-50 rounded-xl border border-gray-200 relative overflow-hidden">
     {/* Background decoration */}
     <div className="absolute inset-0 bg-gray-100/30"></div>
     <div className="absolute top-4 right-4 opacity-20">
@@ -21,4 +23,6 @@ const renderTodoPlanner = () => (
     </div>
   </div>
 );
+}
 
+export default TodoView;

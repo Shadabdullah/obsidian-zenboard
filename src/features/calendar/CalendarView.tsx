@@ -1,4 +1,6 @@
 
+import {  Calendar, Clock, Sparkles } from 'lucide-react';
+
 import React from "react";
 
 const CalendarView = () => {

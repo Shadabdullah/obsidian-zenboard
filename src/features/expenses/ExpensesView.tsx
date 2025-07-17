@@ -1,8 +1,9 @@
 
 import React from "react";
+import {   DollarSign, Clock, Sparkles } from 'lucide-react';
 
 const ExpensesView = () => {
-  <div className="flex flex-col items-center justify-center h-64 bg-gray-50 rounded-xl border border-gray-200 relative overflow-hidden">
+  return (<div className="flex flex-col items-center justify-center h-64 bg-gray-50 rounded-xl border border-gray-200 relative overflow-hidden">
     {/* Background decoration */}
     <div className="absolute inset-0 bg-gray-100/30"></div>
     <div className="absolute top-4 right-4 opacity-20">
