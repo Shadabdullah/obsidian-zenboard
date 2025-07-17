@@ -17,7 +17,7 @@ export class ZentaskDashboardView extends ItemView {
 	}
 
 	getDisplayText(): string {
-		return "📋 ZenTask Dashboard";
+		return "📋 Momentum";
 	}
 
 	getIcon(): string {
