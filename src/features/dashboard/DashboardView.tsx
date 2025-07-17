@@ -96,61 +96,61 @@ const renderTabContent = () => {
   }
 };
 
-  return (
-    <div className="min-h-screen">
-      {/* Header */}
-      <header className="border-b px-6 py-4">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-6">
-            <h1 className="text-xl font-bold">ZenTask</h1>
-            <div className="flex items-center space-x-4 text-sm">
-              <span className="flex items-center">📅 {formatDate(currentTime)}</span>
-              <span>{formatTime(currentTime)}</span>
-            </div>
+return (
+  <div className="min-h-screen ">
+    {/* Header */}
+<header className="border border-obs-divider px-6 py-4">
+      <div className="border border-obs-border flex items-center justify-between">
+        <div className="flex items-center space-x-6">
+          <h1 className="text-base font-semibold">ZenTask</h1>
+          <div className="flex items-center space-x-4 text-sm text-[var(--text-muted)]">
+            <span className="flex items-center">📅 {formatDate(currentTime)}</span>
+            <span>{formatTime(currentTime)}</span>
           </div>
+        </div>
 
-          <div className="flex items-center space-x-4">
-            <a
-              href="https://ko-fi.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center transition-colors"
+        <div className="flex items-center space-x-4">
+          <a
+            href="https://ko-fi.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center hover:text-[var(--interactive-accent-hover)] transition-colors"
+          >
+            <Coffee className="w-4 h-4 mr-1" />
+            Support on Ko-fi
+          </a>
+
+          <button className="flex items-center hover:text-[var(--interactive-accent-hover)] ">
+            <Settings className="w-4 h-4 mr-1" />
+            Settings
+          </button>
+        </div>
+      </div>
+    </header>
+
+    {/* Tab Navigation */}
+    <nav className="border-b border-[var(--border-color)] px-6">
+      <div className="flex space-x-1">
+        {tabs
+          .filter((tab) => tab.enabled)
+          .map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              className={`px-4 py-3 text-sm font-medium border-b-2 transition-all ${
+                activeTab === tab.id
+                  ? "border-[var(--interactive-accent)]"
+                  : "border-transparent"
+              }`}
             >
-              <Coffee className="w-4 h-4 mr-1" />
-              Support on Ko-fi
-            </a>
-
-            <button className="flex items-center transition-colors">
-              <Settings className="w-4 h-4 mr-1" />
-              Settings
+              {tab.label}
             </button>
-          </div>
-        </div>
-      </header>
+          ))}
+      </div>
+    </nav>
 
-      {/* Tab Navigation */}
-      <nav className="border-b px-6">
-        <div className="flex space-x-1">
-          {tabs
-            .filter((tab) => tab.enabled)
-            .map((tab) => (
-              <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
-                className={`px-4 py-3 text-sm font-medium border-b-2 ${
-                  activeTab === tab.id
-                    ? "border-black"
-                    : "border-transparent"
-                }`}
-              >
-                {tab.label}
-              </button>
-            ))}
-        </div>
-      </nav>
-
-      {/* Main Content */}
-      <main className="p-6">{renderTabContent()}</main>
-    </div>
-  );
+    {/* Main Content */}
+    <main className="p-6">{renderTabContent()}</main>
+  </div>
+);
 }

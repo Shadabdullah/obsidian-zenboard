@@ -1,8 +1,149 @@
-
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* ===== 🎨 Backgrounds ===== */
 
+.bg-obs-bg {
+  background-color: var(--background-primary); /* Main surface background */
+}
 
+.bg-obs-bg2 {
+  background-color: var(--background-secondary); /* Card/sidebar/background variants */
+}
+
+.bg-obs-bg-alt {
+  background-color: var(--background-secondary-alt); /* Alternating sections, subtle fills */
+}
+
+.bg-obs-hover {
+  background-color: var(--background-modifier-hover); /* Hover background on items */
+}
+
+.bg-obs-active-hover {
+  background-color: var(--background-modifier-active-hover); /* Active + hover state */
+}
+
+.bg-obs-form {
+  background-color: var(--background-modifier-form-field); /* Inputs, textareas */
+}
+
+/* ===== 📝 Text ===== */
+
+.text-obs-text {
+  color: var(--text-normal); /* Main readable text */
+}
+
+.text-obs-muted {
+  color: var(--text-muted); /* Subtext, timestamps */
+}
+
+.text-obs-faint {
+  color: var(--text-faint); /* Very subtle, hints or placeholders */
+}
+
+.text-obs-accent {
+  color: var(--text-accent); /* Accent-colored text for emphasis */
+}
+
+.text-obs-error {
+  color: var(--text-error); /* Error messages */
+}
+
+.text-obs-onaccent {
+  color: var(--text-on-accent); /* Text inside accent-colored buttons */
+}
+
+/* ===== 🎯 Accent & Interactive ===== */
+
+.bg-obs-accent {
+  background-color: var(--interactive-accent); /* Primary accent (buttons, links) */
+}
+
+.bg-obs-accent-hover {
+  background-color: var(--interactive-accent-hover); /* Hover state for accents */
+}
+
+.text-obs-accent-hover {
+  color: var(--interactive-accent-hover); /* Hover accent text (if needed) */
+}
+
+.border-obs-accent {
+  border-color: var(--interactive-accent); /* Active borders or highlights */
+}
+
+/* ===== 📏 Borders & Dividers ===== */
+
+.border-obs-border {
+border-color: var(--border-color, #000);
+}
+
+.border-obs-divider {
+  border-color: var(--divider-color); /* Dividers between elements */
+}
+
+/* ===== 💻 Code Blocks ===== */
+
+.bg-obs-code {
+  background-color: var(--code-background); /* Code block background */
+}
+
+.text-obs-code {
+  color: var(--code-normal); /* Main code text */
+}
+
+.text-obs-code-comment {
+  color: var(--code-comment); /* Comments inside code blocks */
+}
+
+.text-obs-code-keyword {
+  color: var(--code-keyword); /* Keywords like `function`, `if`, etc. */
+}
+
+.text-obs-code-func {
+  color: var(--code-function); /* Function names */
+}
+
+.text-obs-code-string {
+  color: var(--code-string); /* Strings in code */
+}
+
+.text-obs-code-number {
+  color: var(--code-number); /* Number literals */
+}
+
+.text-obs-code-operator {
+  color: var(--code-operator); /* Operators like +, =, && */
+}
+
+.text-obs-code-var {
+  color: var(--code-variable); /* Variable names */
+}
+
+/* ===== 🖱 Scrollbar (Optional) ===== */
+
+.bg-obs-scrollbar {
+  background-color: var(--scrollbar-bg); /* Scroll track */
+}
+
+.bg-obs-scrollbar-thumb {
+  background-color: var(--scrollbar-thumb-bg); /* Scroll thumb */
+}
+
+/* ===== 🧱 Utility Padding/Outlines (Optional Additions) ===== */
+
+.outline-obs-accent {
+  outline-color: var(--interactive-accent); /* Accent outline for focus/keyboard */
+}
+
+.shadow-obs-s {
+  box-shadow: var(--shadow-s); /* Small shadow (cards/buttons) */
+}
+
+.shadow-obs-l {
+  box-shadow: var(--shadow-l); /* Large shadow (modals/tooltips) */
+}
+
+.bg-obs-modal {
+  background-color: var(--modal-background); /* Modal overlay background */
+}
