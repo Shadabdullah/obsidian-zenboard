@@ -54,6 +54,20 @@ export default function DashboardView({ enabledFeatures }: Props) {
 
   const tabs = [
     {
+      id: "todos",
+      label: "📋 ToDos",
+      enabled: enabledFeatures.todoPlanner,
+      icon: CheckCircle,
+    },
+
+    {
+      id: "calendar",
+      label: "📅 Calendar",
+      enabled: enabledFeatures.calendarPlanner,
+      icon: Calendar,
+    },
+
+    {
       id: "habits",
       label: "🧘 Habit Tracker",
       enabled: enabledFeatures.habitTracker,
@@ -64,18 +78,6 @@ export default function DashboardView({ enabledFeatures }: Props) {
       label: "💰 Expense Manager",
       enabled: enabledFeatures.expenseManager,
       icon: DollarSign,
-    },
-    {
-      id: "todos",
-      label: "📋 ToDos",
-      enabled: enabledFeatures.todoPlanner,
-      icon: CheckCircle,
-    },
-    {
-      id: "calendar",
-      label: "📅 Calendar",
-      enabled: enabledFeatures.calendarPlanner,
-      icon: Calendar,
     },
   ];
 

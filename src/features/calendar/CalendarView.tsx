@@ -4,7 +4,7 @@ import {  Calendar, Clock, Sparkles } from 'lucide-react';
 import React from "react";
 
 const CalendarView = () => {
-return (  <div className="flex flex-col items-center justify-center h-64  border border-orange-200 relative overflow-hidden">
+return (  <div className="flex flex-col items-center justify-center h-64  border relative overflow-hidden">
     {/* Background decoration */}
     <div className="absolute top-4 right-4 opacity-20">
       <Sparkles className="w-8 h-8 text-orange-400" />
@@ -15,9 +15,9 @@ return (  <div className="flex flex-col items-center justify-center h-64  border
       <div className="mb-4 p-4 bg-white/80 rounded-full shadow-sm backdrop-blur-sm">
         <Calendar className="w-12 h-12 text-orange-600" />
       </div>
-      <h3 className="text-xl font-bold text-gray-800 mb-2">Calendar</h3>
+      <h3 className="text-xl font-bold  mb-2">Calendar</h3>
       <p className="text-gray-600 mb-3">Schedule events, plan your time</p>
-      <div className="flex items-center justify-center gap-2 text-sm text-orange-600 font-medium">
+      <div className="flex items-center justify-center gap-2 text-sm font-medium">
         <Clock className="w-4 h-4" />
         <span>Coming Soon</span>
       </div>
