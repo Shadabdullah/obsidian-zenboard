@@ -99,7 +99,7 @@ const renderTabContent = () => {
 return (
   <div className="min-h-screen ">
     {/* Header */}
-<header className="border border-obs-divider px-6 py-4">
+<header className="px-4-4 py-4-2">
       <div className="border border-obs-border flex items-center justify-between">
         <div className="flex items-center space-x-6">
           <h1 className="text-base font-semibold">ZenTask</h1>
