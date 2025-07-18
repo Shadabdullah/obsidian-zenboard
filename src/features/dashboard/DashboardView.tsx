@@ -54,6 +54,19 @@ export default function DashboardView({ enabledFeatures }: Props) {
     });
 
   const tabs = [
+
+    {
+      id: "habits",
+      label: "🧘 Habit Tracker",
+      enabled: enabledFeatures.habitTracker,
+      icon: Target,
+    },
+    {
+      id: "expenses",
+      label: "💰 Expense Manager",
+      enabled: enabledFeatures.expenseManager,
+      icon: DollarSign,
+    },
     {
       id: "todos",
       label: "📋 ToDos",
@@ -68,18 +81,6 @@ export default function DashboardView({ enabledFeatures }: Props) {
       icon: Calendar,
     },
 
-    {
-      id: "habits",
-      label: "🧘 Habit Tracker",
-      enabled: enabledFeatures.habitTracker,
-      icon: Target,
-    },
-    {
-      id: "expenses",
-      label: "💰 Expense Manager",
-      enabled: enabledFeatures.expenseManager,
-      icon: DollarSign,
-    },
   ];
 
 const renderTabContent = () => {
@@ -108,27 +109,19 @@ return (
           </h1>
           <div className="flex items-center space-x-6 text-sm text-gray-600">
             <span className="flex items-center bg-blue-50 px-3 py-1.5 rounded-full">
-              <Calendar className="w-4 h-4 mr-2 text-blue-600" />
+              <Calendar className="w-4 h-4 mr-2 " />
               {formatDate(currentTime)}
             </span>
-            <span className="flex items-center bg-green-50 px-3 py-1.5 rounded-full font-medium">
-              <Clock className="w-4 h-4 mr-2 text-green-600" />
+            <span className="flex items-center  px-3 py-1.5 rounded-full font-medium">
+              <Clock className="w-4 h-4 mr-2 " />
               {formatTime(currentTime)}
             </span>
           </div>
         </div>
  <div className="flex items-center space-x-3">
-          <a
-            href="https://ko-fi.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center px-5 py-2.5 text-sm font-bold  hover:-translate-y-0.5 no-underline"
-          >
-            <span className="mr-2 text-red-200 animate-pulse">❤️</span>
-            <Coffee className="w-4 h-4 mr-2 text-orange-100" />
-            SUPPORT ON KO-FI
-          </a>
-          <button className="flex items-center px-4 py-2 text-sm font-medium text-gray-600 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors duration-200">
+
+
+          <button className="flex items-center px-4 py-2 text-sm font-medium  rounded-lg  duration-200">
             <Settings className="w-4 h-4 mr-2" />
             Settings
           </button>
@@ -137,7 +130,7 @@ return (
     </header>
 
     {/* Tab Navigation */}
-    <nav className="bg-white border-b border-gray-200 px-6 py-3">
+    <nav className=" px-6 py-3">
       <div className="max-w-7xl mx-auto">
         <div className="flex space-x-1">
           {tabs
@@ -161,7 +154,7 @@ return (
 
     {/* Main Content */}
     <main className=" mx-auto px-6 py-8">
-      <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+      <div className="rounded-xl shadow-sm  p-6">
         {renderTabContent()}
       </div>
     </main>
