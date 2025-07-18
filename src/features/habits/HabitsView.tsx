@@ -1,34 +1,32 @@
+import React, { useState, useEffect, useRef } from 'react';
+import { Header } from '../habits/components/Header';
+import { useTimerManager } from '../habits/hooks/useTimerManager';
+import { Task, DayData } from '../types/types';
+import { formatTime } from '../utils/helpers';
 
-import react, { usestate, useeffect, useref } from 'react';
-import { header } from '../habits/components/header';
-import { usetimermanager } from '../habits/hooks/usetimermanager';
-import { task, daydata } from '../types/types';
-import { formattime } from '../utils/helpers';
+const HabitView: React.FC = () => {
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const timerManager = useTimerManager();
 
-const habitview: react.fc = () => {
-  const scrollcontainerref = useref<htmldivelement>(null);
-  const timermanager = usetimermanager();
-  const [selecteddate, setselecteddate] = usestate(new date());
-  const [currentmonthinview, setcurrentmonthinview] = usestate('');
-  const [showanalytics, setshowanalytics] = usestate(false);
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [currentMonthInView, setCurrentMonthInView] = useState('');
+  const [showAnalytics, setShowAnalytics] = useState(false);
 
-  // dummy tasks and calendar data for illustration
-  const [tasks, settasks] = usestate<task[]>([/* your tasks here */]);
-  const [calendardata, setcalendardata] = usestate<daydata[]>([/* your data here */]);
+  const [tasks, setTasks] = useState<Task[]>([]); // Replace with actual data
+  const [calendarData, setCalendarData] = useState<DayData[]>([]); // Replace with actual data
 
-  // add your other modular components here (calendarscroller, tasklist, etc.)
   return (
-    <div classname="bg-gray-900 text-white min-h-screen p-6">
-      <div classname="max-w-7xl mx-auto">
-        <header
-          selecteddate={selecteddate}
-          currentmonthinview={currentmonthinview}
-          onanalyticsclick={() => setshowanalytics(true)}
+    <div className="bg-gray-900 text-white min-h-screen p-6">
+      <div className="max-w-7xl mx-auto">
+        <Header
+          selectedDate={selectedDate}
+          currentMonthInView={currentMonthInView}
+          onAnalyticsClick={() => setShowAnalytics(true)}
         />
-        {/* add calendarscroller, tasklist, analyticsmodal here */}
+        {/* Add CalendarScroller, TaskList, AnalyticsModal here */}
       </div>
     </div>
   );
 };
 
-export default habitview;
+export default HabitView;

@@ -43,15 +43,6 @@ export default function DashboardView({ enabledFeatures }: Props) {
     else if (enabledFeatures.calendarPlanner) setActiveTab("calendar");
   }, [enabledFeatures]);
 
-  const formatTime = (date: Date) =>
-    date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
-
-  const formatDate = (date: Date) =>
-    date.toLocaleDateString("en-US", {
-      weekday: "short",
-      month: "short",
-      day: "numeric",
-    });
 
   const tabs = [
 
@@ -107,16 +98,6 @@ return (
           <h1 className="text-2xl font-bold text-gray-900 tracking-tight">
             Momentum
           </h1>
-          <div className="flex items-center space-x-6 text-sm text-gray-600">
-            <span className="flex items-center bg-blue-50 px-3 py-1.5 rounded-full">
-              <Calendar className="w-4 h-4 mr-2 " />
-              {formatDate(currentTime)}
-            </span>
-            <span className="flex items-center  px-3 py-1.5 rounded-full font-medium">
-              <Clock className="w-4 h-4 mr-2 " />
-              {formatTime(currentTime)}
-            </span>
-          </div>
         </div>
  <div className="flex items-center space-x-3">
 
