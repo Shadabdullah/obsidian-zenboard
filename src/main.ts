@@ -4,7 +4,6 @@ import {
 	Editor,
 	MarkdownView,
 	Modal,
-	Notice,
 	Plugin,
 	PluginSettingTab,
 	Setting
@@ -109,17 +108,17 @@ export default class ZenTaskPlugin extends Plugin {
 	}
 
 	// ✅ Activate React View Panel
-async activateDashboardView() {
-	console.log("🧠 activateDashboardView triggered");
+	async activateDashboardView() {
+		console.log("🧠 activateDashboardView triggered");
 
-	const leaf = this.app.workspace.getLeaf(false); // main workspace
-	console.log("✅ Main workspace leaf found. Setting view state...");
+		const leaf = this.app.workspace.getLeaf(false); // main workspace
+		console.log("✅ Main workspace leaf found. Setting view state...");
 
-	await leaf.setViewState({
-		type: VIEW_TYPE_ZENTASK,
-		active: true,
-	});
-}
+		await leaf.setViewState({
+			type: VIEW_TYPE_ZENTASK,
+			active: true,
+		});
+	}
 
 
 }

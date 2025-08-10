@@ -1,26 +1,102 @@
 {
-  "compilerOptions": {
-    "baseUrl": ".",
-    "inlineSourceMap": true,
-    "inlineSources": true,
-    "module": "ESNext",
-    "target": "ES6",
-    "allowJs": true,
-    "noImplicitAny": true,
-    "moduleResolution": "node",
-    "importHelpers": true,
-    "isolatedModules": true,
-    "strictNullChecks": true,
-
-   "lib": [
-      "DOM",
-      "ES2020"
-    ],
-    "jsx": "react-jsx"     ,
- "allowSyntheticDefaultImports": true
-  },
-  "include": [
-    "src/**/*.ts",
-    "src/**/*.tsx"         // 👈 Make sure TSX files are included too
-  ]
+	"compilerOptions": {
+		"baseUrl": ".",
+		"paths": {
+			// App level
+			"@app/*": [
+				"src/app/*"
+			],
+			"@views/*": [
+				"src/views/*"
+			],
+			"@context/*": [
+				"src/context/*"
+			],
+			// Features
+			"@features/*": [
+				"src/features/*"
+			],
+			// Settings feature
+			"@settings/*": [
+				"src/features/settings/*"
+			],
+			"@settings/components/*": [
+				"src/features/settings/views/components/*"
+			],
+			"@settings/types/*": [
+				"src/features/settings/types/*"
+			],
+			"@settings/hooks/*": [
+				"src/features/settings/hooks/*"
+			],
+			// Habits feature
+			"@habits/*": [
+				"src/features/habits/*"
+			],
+			"@habits/components/*": [
+				"src/features/habits/components/*"
+			],
+			"@habits/hooks/*": [
+				"src/features/habits/hooks/*"
+			],
+			"@habits/store/*": [
+				"src/features/habits/store/*"
+			],
+			"@habits/types/*": [
+				"src/features/habits/types/*"
+			],
+			"@habits/utils/*": [
+				"src/features/habits/utils/*"
+			],
+			"@habits/controller/*": [
+				"src/features/habits/controller/*"
+			],
+			// Shared
+			"@shared/*": [
+				"src/shared/*"
+			],
+			"@components/*": [
+				"src/shared/components/*"
+			],
+			"@hooks/*": [
+				"src/shared/hooks/*"
+			],
+			"@utils/*": [
+				"src/shared/utils/*"
+			],
+			// Root level
+			"@src/*": [
+				"src/*"
+			],
+			"@assets/*": [
+				"src/assets/*"
+			],
+			"@locales/*": [
+				"src/locales/*"
+			],
+			"@pages/*": [
+				"src/pages/*"
+			]
+		},
+		"inlineSourceMap": true,
+		"inlineSources": true,
+		"module": "ESNext",
+		"target": "ES6",
+		"allowJs": true,
+		"noImplicitAny": true,
+		"moduleResolution": "node",
+		"importHelpers": true,
+		"isolatedModules": true,
+		"strictNullChecks": true,
+		"lib": [
+			"DOM",
+			"ES2020"
+		],
+		"jsx": "react-jsx",
+		"allowSyntheticDefaultImports": true
+	},
+	"include": [
+		"src/**/*.ts",
+		"src/**/*.tsx"
+	]
 }

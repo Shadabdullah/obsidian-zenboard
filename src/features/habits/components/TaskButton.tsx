@@ -1,72 +1,157 @@
-
-import React from 'react';
-import { Play, Pause, Plus, RotateCcw } from 'lucide-react';
-import { Task } from '../types/types';
-import { formatTime } from '../utils/helpers';
+import { StoredHabit } from "../types/habitTypes";
+import React from "react";
+import { Play, Plus, Pause, RotateCcw, CheckCircle } from "lucide-react";
+import { HabitStore } from "@habits/store";
 
 interface TaskButtonProps {
-  task: Task;
-  onToggle: (id: string) => void;
-  onIncrement?: (id: string) => void;
-  onTimerToggle?: (id: string) => void;
-  onResetTimer?: (id: string) => void;
+  task: StoredHabit;
+  progress: number;
 }
 
-export const TaskButton: React.FC<TaskButtonProps> = ({ task, onToggle, onIncrement, onTimerToggle, onResetTimer }) => {
-  if (task.type === 'checkbox') {
+const TaskButton: React.FC<TaskButtonProps> = ({ task, progress }) => {
+  const { taskDone, incrementHabit, resetTimer, toggleTimer } = HabitStore();
+
+  // === Task-based (boolean) ===
+  if (task.trackingType === "task") {
     return (
       <button
-        onClick={() => onToggle(task.id)}
-        className={`w-12 h-12 rounded-full border-2 flex items-center justify-center transition-all ${
-          task.completed ? 'bg-green-500 border-green-500' : 'border-gray-600 hover:border-green-400'
-        }`}
+        onClick={() => taskDone(task.id)}
+        className={`
+          w-14 h-14 rounded-full flex items-center justify-center
+          transition-all duration-200 ease-out active:scale-95
+          border-2 bg-white shadow-sm hover:shadow-md
+        `}
+        style={{
+          backgroundColor: task.color,
+          borderColor: task.color,
+        }}
       >
-        {task.completed && <span className="text-white font-bold text-xl">✓</span>}
+        <CheckCircle size={22} className="text-white" fill="white" />
       </button>
     );
   }
 
-  if (task.type === 'counter') {
+  // === Amount-based (counter) ===
+  if (task.trackingType === "amount") {
+    const progresz = Math.min(
+      ((progress || 0) / (task.targetCount || 1)) * 100,
+      100,
+    );
+    const radius = 22;
+    const circumference = 2 * Math.PI * radius;
+    const strokeDashoffset = circumference - (progresz / 100) * circumference;
+
     return (
-      <div className="flex items-center gap-2">
-        <div className="text-right">
-          <div className="text-lg font-bold text-white">
-            {task.counterValue || 0}/{task.targetCount || 0}
-          </div>
-        </div>
+      <div className="relative w-14 h-14">
+        <svg className="w-14 h-14" viewBox="0 0 48 48">
+          <circle
+            cx="24"
+            cy="24"
+            r={radius}
+            stroke="#e5e7eb"
+            strokeWidth="3"
+            fill="none"
+          />
+          <circle
+            cx="24"
+            cy="24"
+            r={radius}
+            stroke={task.color}
+            strokeWidth="3"
+            fill="none"
+            strokeDasharray={circumference}
+            strokeDashoffset={strokeDashoffset}
+            strokeLinecap="round"
+            className="transition-all duration-500 ease-out"
+          />
+        </svg>
+
         <button
-          onClick={() => onIncrement && onIncrement(task.id)}
-          className="w-12 h-12 bg-blue-500 hover:bg-blue-600 rounded-full flex items-center justify-center transition-colors"
-          disabled={task.completed}
+          onClick={() => incrementHabit(task.id)}
+          className={`
+            absolute inset-0 w-14 h-14 rounded-full flex flex-col items-center justify-center
+            transition-all duration-200 ease-out active:scale-95 hover:shadow-md
+          `}
+          style={{ backgroundColor: `${task.color}15` }}
         >
-          <Plus className="w-6 h-6 text-white" />
+          <span
+            className="text-base font-extrabold leading-tight"
+            style={{ color: task.color }}
+          >
+            {task.counterValue || 0}
+          </span>
+          <Plus size={12} style={{ color: task.color }} strokeWidth={3} />
         </button>
       </div>
     );
   }
 
-  if (task.type === 'timer') {
+  // === Time-based (timer) ===
+  if (task.trackingType === "time") {
+    const progresz = Math.min(
+      ((progress || 0) / (task.timeValue || 1)) * 100,
+      100,
+    );
+    const radius = 22;
+    const circumference = 2 * Math.PI * radius;
+    const strokeDashoffset = circumference - (progresz / 100) * circumference;
+
     return (
-      <div className="flex items-center gap-2">
-        <div className="text-right">
-          <div className="text-lg font-bold text-white">{formatTime(task.timerElapsed || 0)}</div>
-          <div className="text-sm text-gray-400">/ {formatTime(task.timerDuration || 0)}</div>
-        </div>
+      <div className="relative w-14 h-14">
+        <svg className="w-14 h-14 transform -rotate-90" viewBox="0 0 48 48">
+          <circle
+            cx="24"
+            cy="24"
+            r={radius}
+            stroke="#f3f4f6"
+            strokeWidth="3"
+            fill="none"
+          />
+          <circle
+            cx="24"
+            cy="24"
+            r={radius}
+            stroke={task.color}
+            strokeWidth="3"
+            fill="none"
+            strokeDasharray={circumference}
+            strokeDashoffset={strokeDashoffset}
+            strokeLinecap="round"
+            className="transition-all duration-500 ease-out"
+          />
+        </svg>
+
         <button
-          onClick={() => onTimerToggle && onTimerToggle(task.id)}
-          className={`w-12 h-12 rounded-full flex items-center justify-center transition-colors ${
-            task.isTimerRunning ? 'bg-red-500 hover:bg-red-600' : 'bg-green-500 hover:bg-green-600'
-          }`}
-          disabled={task.completed}
+          onClick={() => toggleTimer(task.id)}
+          className={`
+            absolute inset-0 w-14 h-14 rounded-full flex items-center justify-center
+            transition-all duration-200 ease-out active:scale-95 hover:shadow-md
+          `}
+          style={{
+            backgroundColor: task.isTimerRunning
+              ? `${task.color}25`
+              : `${task.color}15`,
+          }}
         >
-          {task.isTimerRunning ? <Pause className="w-6 h-6 text-white" /> : <Play className="w-6 h-6 text-white" />}
+          {task.isTimerRunning ? (
+            <Pause size={14} style={{ color: task.color }} strokeWidth={2.5} />
+          ) : (
+            <Play
+              size={14}
+              style={{ color: task.color }}
+              strokeWidth={2.5}
+              fill={task.color}
+            />
+          )}
         </button>
-        {(task.timerElapsed || 0) > 0 && (
+
+        {(task.timerElapsed || 0) > 0 && !task.isTimerRunning && (
           <button
-            onClick={() => onResetTimer && onResetTimer(task.id)}
-            className="w-10 h-10 bg-gray-600 hover:bg-gray-500 rounded-full flex items-center justify-center transition-colors"
+            onClick={() => resetTimer(task.id)}
+            className="absolute -top-1 -right-1 w-4.5 h-4.5 rounded-full flex items-center justify-center
+              bg-gray-100 hover:bg-gray-200 active:bg-gray-300 shadow-sm transition-all duration-200 ease-out active:scale-90"
           >
-            <RotateCcw className="w-4 h-4 text-white" />
+            <RotateCcw size={20} className="text-gray-600" strokeWidth={2} />
           </button>
         )}
       </div>
@@ -75,3 +160,5 @@ export const TaskButton: React.FC<TaskButtonProps> = ({ task, onToggle, onIncrem
 
   return null;
 };
+
+export default TaskButton;
