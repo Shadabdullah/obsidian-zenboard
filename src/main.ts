@@ -1,4 +1,5 @@
 
+import { initStorage } from '@features/habits/utils';
 import {
 	App,
 	Editor,
@@ -26,6 +27,11 @@ export default class ZenTaskPlugin extends Plugin {
 
 	async onload() {
 		await this.loadSettings();
+
+
+		// Storage
+
+		await initStorage(this);
 
 		// ✅ Register custom view
 		this.registerView(
