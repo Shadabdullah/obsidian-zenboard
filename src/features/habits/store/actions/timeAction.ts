@@ -21,7 +21,7 @@ export const createTimeAction: StateCreator<
 	TimeActionSlice
 > = (set, get) => ({
 	// Initialize timer elapsed from saved stats (call this after loading habits/stats)
-	initializeTimerElapsed: (taskId: string) => {
+	initializeTimerElapsed: async (taskId: string) => {
 		const { allStats, setAllHabits } = get();
 		const today = getTodayDate();
 		const savedElapsed = allStats?.[taskId]?.[today]?.v || 0;
@@ -37,7 +37,7 @@ export const createTimeAction: StateCreator<
 		}
 	},
 
-	toggleTimer: (taskId: string) => {
+	toggleTimer: async (taskId: string) => {
 		const {
 			setAllStats,
 			todayHabits,
@@ -74,6 +74,7 @@ export const createTimeAction: StateCreator<
 					const updatedStat: HabitStatEntry = { t: "time", v: newElapsed };
 					updateHabitStat(taskId, today, updatedStat);
 					lastSyncedTimestamps.set(taskId, Date.now());
+					console.log("⏸ PAUSE: Synced to DB:", updatedStat);
 				}
 			}
 
@@ -154,6 +155,7 @@ export const createTimeAction: StateCreator<
 				if (shouldStop || now - lastSynced >= 15000) {
 					updateHabitStat(taskId, today, updatedStat);
 					lastSyncedTimestamps.set(taskId, now);
+					console.log("⏰ TIMER: Synced to DB:", updatedStat);
 				}
 
 				// Stop timer if target reached
@@ -163,6 +165,7 @@ export const createTimeAction: StateCreator<
 						clearInterval(runningInterval);
 						timerIntervals.delete(taskId);
 					}
+					console.log("🎯 TIMER: Target reached, stopped");
 				}
 			}, 1000);
 
@@ -177,7 +180,7 @@ export const createTimeAction: StateCreator<
 		recomputeDerivedState();
 	},
 
-	resetTimer: (taskId: string) => {
+	resetTimer: async (taskId: string) => {
 		const { setAllStats, setAllHabits, recomputeDerivedState } = get();
 		const today = getTodayDate();
 
@@ -220,6 +223,7 @@ export const createTimeAction: StateCreator<
 
 		// Sync reset to database
 		updateHabitStat(taskId, today, updatedStat);
+		console.log("🧼 RESET: Updated DB with 0");
 
 		recomputeDerivedState();
 	},
@@ -232,6 +236,7 @@ export const clearAllTimers = () => {
 	}
 	timerIntervals.clear();
 	lastSyncedTimestamps.clear();
+	console.log("🧹 CLEANUP: All timers cleared");
 };
 
 // Export types - you'll need to add initializeTimerElapsed to your TimeActionSlice type

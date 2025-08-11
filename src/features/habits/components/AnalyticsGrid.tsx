@@ -321,7 +321,6 @@ const AnalyticsGrid: React.FC<AnalyticsGridProps> = ({
 		const monthName = getMonthName(month);
 
 
-		console.log(dataPeriod)
 
 		return (
 			<>
@@ -603,7 +602,8 @@ const AnalyticsGrid: React.FC<AnalyticsGridProps> = ({
 				}`}
 		>
 			{habits?.map((habit) => {
-				const processedData = analyticsData?.[habit.id]?.[viewType] ?? [];
+				const processedData: ProcessedHabitData | null =
+					analyticsData?.[habit.id]?.[viewType] ?? null;
 				if (!processedData) return null;
 
 				return (
