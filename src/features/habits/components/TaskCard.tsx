@@ -16,12 +16,12 @@ const TaskCard: React.FC<TaskCardProps> = ({ task, isCompleted, progress }) => {
 		if (task.trackingType === "amount") {
 			return (
 				<>
-					<span className="text-gray-700 dark:text-gray-300">
+					<span className="text-default">
 						{progress}
 						{/* //{task.counterValue || 0} */}
 					</span>
-					<span className="mx-1 text-gray-400 dark:text-gray-500">/</span>
-					<span className="text-gray-700 dark:text-gray-300">
+					<span className="mx-1 text-muted">/</span>
+					<span className="text-default">
 						{task.targetCount || 0}
 					</span>
 				</>
@@ -30,11 +30,11 @@ const TaskCard: React.FC<TaskCardProps> = ({ task, isCompleted, progress }) => {
 		if (task.trackingType === "time") {
 			return (
 				<>
-					<span className="text-gray-700 dark:text-gray-300">
+					<span className="text-default">
 						{formatTime(progress || 0)}
 					</span>
-					<span className="mx-1 text-gray-400 dark:text-gray-500">—</span>
-					<span className="text-gray-700 dark:text-gray-300">
+					<span className="mx-1 text-muted">—</span>
+					<span className="text-default">
 						{formatTime(task.timeValue || 0)}
 					</span>
 				</>
@@ -54,12 +54,12 @@ const TaskCard: React.FC<TaskCardProps> = ({ task, isCompleted, progress }) => {
 		<div
 			className={`
         relative overflow-hidden
-        bg-white dark:bg-gray-800
-        rounded-2xl
+        bg-secondary
+        rounded-l
         transition-all duration-300 ease-out
         active:scale-[0.98]
         shadow-sm
-        border border-gray-100 dark:border-gray-700
+        border-default
         ${shouldBlink() ? 'animate-pulse' : ''}
       `}
 			style={{
@@ -87,7 +87,7 @@ const TaskCard: React.FC<TaskCardProps> = ({ task, isCompleted, progress }) => {
       `}</style>
 
 			{/* Subtle top highlight - iOS characteristic */}
-			<div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/60 dark:via-gray-600/30 to-transparent" />
+			<div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/60 via-gray-600/30 to-transparent" />
 
 			<div className="p-4">
 				<div className="flex items-center justify-between">
@@ -95,7 +95,7 @@ const TaskCard: React.FC<TaskCardProps> = ({ task, isCompleted, progress }) => {
 						{/* Icon with iOS-style design */}
 						<div
 							className={`
-                relative w-12 h-12 rounded-xl flex items-center justify-center
+                relative w-12 h-12 rounded-m flex items-center justify-center
                 transition-all duration-200
                 ${shouldBlink() ? 'animate-bounce' : ''}
               `}
@@ -116,8 +116,8 @@ const TaskCard: React.FC<TaskCardProps> = ({ task, isCompleted, progress }) => {
 									className={`
                   font-semibold text-base leading-tight truncate
                   transition-all duration-200
-                  text-gray-900 dark:text-white
-                  ${shouldBlink() ? 'text-red-600 dark:text-red-400' : ''}
+                  text-default
+                  ${shouldBlink() ? 'text-red-600' : ''}
                 `}
 								>
 									{task.name}
@@ -125,7 +125,7 @@ const TaskCard: React.FC<TaskCardProps> = ({ task, isCompleted, progress }) => {
 
 								{/* Progress indicator 
                 {!task.isCompleted && getProgress() && (
-                  <span className="text-sm font-medium text-gray-500 dark:text-gray-400 ml-2 flex-shrink-0">
+                  <span className="text-sm font-medium text-muted ml-2 flex-shrink-0">
                     {getProgress()}
                   </span>
                 )}
@@ -137,11 +137,7 @@ const TaskCard: React.FC<TaskCardProps> = ({ task, isCompleted, progress }) => {
 								{task.selectedDays.map((day, index) => (
 									<span
 										key={index}
-										className={`
-                      text-xs px-1.5 py-0.5 rounded-md font-medium
-                      text-gray-500 dark:text-gray-400 
-                      bg-gray-100 dark:bg-gray-700
-                    `}
+										className="text-xs px-1.5 py-0.5 rounded-s font-medium text-muted bg-hover"
 									>
 										{day}
 									</span>
@@ -152,7 +148,7 @@ const TaskCard: React.FC<TaskCardProps> = ({ task, isCompleted, progress }) => {
 							{(task.trackingType === "amount" ||
 								task.trackingType === "time") && (
 									<div className="mt-2">
-										<div className="h-1 bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden">
+										<div className="h-1 bg-hover rounded-full overflow-hidden">
 											<div
 												className={`
                         h-full transition-all duration-300 rounded-full
@@ -175,11 +171,11 @@ const TaskCard: React.FC<TaskCardProps> = ({ task, isCompleted, progress }) => {
 						{!isCompleted && getProgressInfo() && (
 							<div
 								className={`
-                  text-sm px-2 py-0.5 rounded-lg inline-block transition-colors duration-200
+                  text-sm px-2 py-0.5 rounded-s inline-block transition-colors duration-200
                   tabular-nums font-semibold tracking-wide
                   ${shouldBlink()
-										? 'bg-red-100 dark:bg-red-900 text-red-600 dark:text-red-300 animate-pulse'
-										: 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300'
+										? 'bg-red-100 text-red-600 animate-pulse'
+										: 'bg-hover text-muted'
 									}
                 `}
 							>
@@ -194,7 +190,7 @@ const TaskCard: React.FC<TaskCardProps> = ({ task, isCompleted, progress }) => {
 			</div>
 
 			{/* Bottom separator - iOS style */}
-			<div className="absolute bottom-0 left-4 right-4 h-px bg-gray-100 dark:bg-gray-700" />
+			<div className="absolute bottom-0 left-4 right-4 h-px bg-hover" />
 		</div>
 	);
 };

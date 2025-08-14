@@ -29,10 +29,10 @@ const Calendar: React.FC<CalendarProps> = ({
 	};
 
 	return (
-		<div className="relative px-4 py-3">
+		<div className="relative px-4-1 py-4-2">
 			{/* Header section */}
 			<div className="flex items-center justify-between mb-6">
-				<h2 className="text-xl font-semibold text-gray-900 dark:text-white tracking-tight">
+				<h2 className="text-xl font-semibold text-default tracking-tight">
 					Calendar
 				</h2>
 
@@ -40,33 +40,33 @@ const Calendar: React.FC<CalendarProps> = ({
 				<div className="flex items-center gap-2">
 					<button
 						onClick={scrollToStart}
-						className="text-sm px-3 py-1.5 rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200"
+						className="text-sm px-3 py-1.5 rounded-m bg-secondary text-muted hover:bg-hover transition-colors duration-200"
 					>
 						Start
 					</button>
 					<button
 						onClick={scrollToToday}
-						className="text-sm px-3 py-1.5 rounded-lg bg-blue-500 text-white hover:bg-blue-600 transition-colors duration-200 font-medium"
+						className="text-sm px-3 py-1.5 rounded-m bg-blue-500 text-white hover:bg-blue-600 transition-colors duration-200 font-medium"
 					>
 						Today
 					</button>
 					<button
 						onClick={scrollToEnd}
-						className="text-sm px-3 py-1.5 rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200"
+						className="text-sm px-3 py-1.5 rounded-m bg-secondary text-muted hover:bg-hover transition-colors duration-200"
 					>
 						End
 					</button>
 					<button
 						onClick={() => onScroll("left")}
-						className="p-1.5 rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200"
+						className="p-1.5 rounded-m bg-secondary hover:bg-hover transition-colors duration-200"
 					>
-						<ChevronLeft className="w-4 h-4 text-gray-600 dark:text-gray-400" />
+						<ChevronLeft className="w-4 h-4 text-muted" />
 					</button>
 					<button
 						onClick={() => onScroll("right")}
-						className="p-1.5 rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200"
+						className="p-1.5 rounded-m bg-secondary hover:bg-hover transition-colors duration-200"
 					>
-						<ChevronRight className="w-4 h-4 text-gray-600 dark:text-gray-400" />
+						<ChevronRight className="w-4 h-4 text-muted" />
 					</button>
 				</div>
 			</div>
@@ -74,12 +74,14 @@ const Calendar: React.FC<CalendarProps> = ({
 			{/* Calendar container */}
 			<div className="relative">
 				{/* Subtle fade edges */}
-				<div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-white dark:from-gray-900 to-transparent z-10 pointer-events-none" />
-				<div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-white dark:from-gray-900 to-transparent z-10 pointer-events-none" />
+				<div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-current to-transparent z-10 pointer-events-none text-primary"
+					style={{ color: 'var(--background-primary)' }} />
+				<div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-current to-transparent z-10 pointer-events-none text-primary"
+					style={{ color: 'var(--background-primary)' }} />
 
 				<div
 					ref={scrollRef as React.RefObject<HTMLDivElement>}
-					className="flex gap-3 pb-4 px-2 scrollbar-hide relative"
+					className="flex gap-4-3 pb-4 px-2 scrollbar-hide relative"
 					style={{
 						overflowX: "auto",
 						overflowY: "visible",
@@ -107,18 +109,18 @@ const Calendar: React.FC<CalendarProps> = ({
 						const isFuture = day.date > new Date();
 						const isPast = day.date < new Date() && !isToday;
 
-						// iOS-style minimal design with proper light/dark theme support
+						// iOS-style minimal design with Obsidian theme support
 						const getCardStyles = () => {
 							if (isComplete) {
-								return "bg-blue-500 dark:bg-blue-600 border border-blue-400 dark:border-blue-500 shadow-lg";
+								return "bg-blue-500 border border-blue-400 shadow-lg";
 							}
 							if (isSelected) {
-								return "bg-blue-50 dark:bg-blue-950/50 border border-blue-200 dark:border-blue-800 shadow-md";
+								return "bg-blue-50 border border-blue-200 shadow-md";
 							}
 							if (isToday) {
-								return "bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-md";
+								return "bg-secondary border-default shadow-md";
 							}
-							return "bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 shadow-sm";
+							return "bg-primary border-default shadow-sm";
 						};
 
 						const getTextColor = () => {
@@ -126,15 +128,15 @@ const Calendar: React.FC<CalendarProps> = ({
 								return "text-white";
 							}
 							if (isSelected) {
-								return "text-blue-600 dark:text-blue-400";
+								return "text-blue-600";
 							}
 							if (isToday) {
-								return "text-gray-900 dark:text-white";
+								return "text-default";
 							}
 							if (isFuture) {
-								return "text-gray-400 dark:text-gray-500";
+								return "text-faint";
 							}
-							return "text-gray-600 dark:text-gray-400";
+							return "text-muted";
 						};
 
 						const getDateColor = () => {
@@ -142,15 +144,28 @@ const Calendar: React.FC<CalendarProps> = ({
 								return "text-white";
 							}
 							if (isSelected) {
-								return "text-blue-600 dark:text-blue-400";
+								return "text-blue-600";
 							}
 							if (isToday) {
-								return "text-gray-900 dark:text-white";
+								return "text-default";
 							}
 							if (isFuture) {
-								return "text-gray-400 dark:text-gray-500";
+								return "text-faint";
 							}
-							return "text-gray-900 dark:text-white";
+							return "text-default";
+						};
+
+						const getButtonBg = () => {
+							if (isComplete) {
+								return "bg-white/20";
+							}
+							if (isSelected) {
+								return "bg-primary";
+							}
+							if (isToday) {
+								return "bg-primary";
+							}
+							return "bg-secondary";
 						};
 
 						return (
@@ -178,14 +193,7 @@ const Calendar: React.FC<CalendarProps> = ({
                       flex items-center justify-center
                       cursor-pointer transition-all duration-200 ease-out
                       active:scale-95 hover:scale-105
-                      ${isComplete
-												? "bg-white/20"
-												: isSelected
-													? "bg-white dark:bg-gray-800"
-													: isToday
-														? "bg-white dark:bg-gray-700"
-														: "bg-gray-50 dark:bg-gray-800"
-											}
+                      ${getButtonBg()}
                     `}
 									>
 										{/* Progress ring - minimal iOS style */}
@@ -203,7 +211,7 @@ const Calendar: React.FC<CalendarProps> = ({
 														fill="none"
 														stroke="currentColor"
 														strokeWidth="3"
-														className="text-gray-200 dark:text-gray-700"
+														className="text-muted opacity-30"
 													/>
 													{/* Progress circle */}
 													<circle
@@ -215,11 +223,7 @@ const Calendar: React.FC<CalendarProps> = ({
 														strokeWidth="3"
 														strokeLinecap="round"
 														strokeDasharray={`${progress * 2.89} 289`}
-														className={
-															isSelected
-																? "text-blue-500 dark:text-blue-400"
-																: "text-blue-500 dark:text-blue-400"
-														}
+														className="text-blue-500"
 														style={{
 															transition: "stroke-dasharray 0.3s ease-out",
 														}}
@@ -239,7 +243,7 @@ const Calendar: React.FC<CalendarProps> = ({
 														fill="none"
 														stroke="currentColor"
 														strokeWidth="2"
-														className="text-gray-300 dark:text-gray-600"
+														className="text-faint opacity-50"
 													/>
 												</svg>
 											</div>
@@ -283,15 +287,15 @@ const Calendar: React.FC<CalendarProps> = ({
 
 										{/* Completion indicator - blue dot */}
 										{isComplete && (
-											<div className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-white dark:bg-gray-900 shadow-sm flex items-center justify-center">
-												<div className="w-2 h-2 rounded-full bg-blue-500 dark:bg-blue-400"></div>
+											<div className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-primary shadow-sm flex items-center justify-center">
+												<div className="w-2 h-2 rounded-full bg-blue-500"></div>
 											</div>
 										)}
 
 										{/* Progress percentage for incomplete days */}
 										{!isComplete && !isFuture && progress > 0 && (
-											<div className="absolute -top-1 -right-1 w-6 h-6 rounded-full bg-white dark:bg-gray-900 shadow-sm flex items-center justify-center border border-gray-200 dark:border-gray-700">
-												<span className="text-[10px] font-semibold text-blue-600 dark:text-blue-400">
+											<div className="absolute -top-1 -right-1 w-6 h-6 rounded-full bg-primary shadow-sm flex items-center justify-center border-default">
+												<span className="text-[10px] font-semibold text-blue-600">
 													{progress}
 												</span>
 											</div>
@@ -308,8 +312,9 @@ const Calendar: React.FC<CalendarProps> = ({
 
 			{/* Simple scroll indicator */}
 			<div className="flex justify-center mt-4">
-				<div className="w-8 h-1 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
-					<div className="w-1/3 h-full bg-gray-400 dark:bg-gray-500 rounded-full" />
+				<div className="w-8 h-1 bg-secondary rounded-full overflow-hidden">
+					<div className="w-1/3 h-full bg-muted rounded-full"
+						style={{ backgroundColor: 'var(--text-muted)' }} />
 				</div>
 			</div>
 		</div>

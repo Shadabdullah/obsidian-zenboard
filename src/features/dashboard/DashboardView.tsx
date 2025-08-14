@@ -1,11 +1,9 @@
-
 import React, { useState, useEffect } from "react";
 import {
 	Target,
 	DollarSign,
 	Settings
 } from "lucide-react";
-
 import ExpensesView from "../expenses/ExpensesView";
 import HabitsView from "../habits/HabitsView";
 
@@ -33,9 +31,7 @@ export default function DashboardView({ enabledFeatures }: Props) {
 		else if (enabledFeatures.expenseManager) setActiveTab("expenses");
 	}, [enabledFeatures]);
 
-
 	const tabs = [
-
 		{
 			id: "habits",
 			label: "🧘 Habit Tracker",
@@ -48,7 +44,6 @@ export default function DashboardView({ enabledFeatures }: Props) {
 			enabled: enabledFeatures.expenseManager,
 			icon: DollarSign,
 		},
-
 	];
 
 	const renderTabContent = () => {
@@ -57,29 +52,23 @@ export default function DashboardView({ enabledFeatures }: Props) {
 				return <HabitsView />;
 			case "expenses":
 				return <ExpensesView />;
-			case "todos":
-				return <TodosView />;
-			case "calendar":
-				return <CalendarView />;
 			default:
-				return <div className="text-center py-8">No content available.</div>;
+				return <div className="text-center py-8 text-muted">No content available.</div>;
 		}
 	};
 
 	return (
-		<div className="min-h-screen ">
+		<div className="min-h-screen bg-primary">
 			{/* Header */}
-			<header className="shadow-sm   px-6 py-4">
+			<header className="shadow-sm bg-primary px-6 py-4 border-b border-hover">
 				<div className="max-w-7xl mx-auto flex items-center justify-between">
 					<div className="flex items-center space-x-8">
-						<h1 className="text-2xl font-bold text-gray-900 tracking-tight">
+						<h1 className="text-2xl font-bold text-default tracking-tight">
 							Momentum
 						</h1>
 					</div>
 					<div className="flex items-center space-x-3">
-
-
-						<button className="flex items-center px-4 py-2 text-sm font-medium  rounded-lg  duration-200">
+						<button className="flex items-center px-4 py-2 text-sm font-medium text-muted hover:text-default hover:bg-hover rounded-m transition-colors duration-200">
 							<Settings className="w-4 h-4 mr-2" />
 							Settings
 						</button>
@@ -88,7 +77,7 @@ export default function DashboardView({ enabledFeatures }: Props) {
 			</header>
 
 			{/* Tab Navigation */}
-			<nav className=" px-6 py-3">
+			<nav className="bg-primary px-6 py-3 border-b border-hover">
 				<div className="max-w-7xl mx-auto">
 					<div className="flex space-x-1">
 						{tabs
@@ -97,9 +86,9 @@ export default function DashboardView({ enabledFeatures }: Props) {
 								<button
 									key={tab.id}
 									onClick={() => setActiveTab(tab.id)}
-									className={`px-6 py-3 text-sm font-medium rounded-lg transition-all duration-200 ${activeTab === tab.id
+									className={`px-6 py-3 text-sm font-medium rounded-m transition-all duration-200 ${activeTab === tab.id
 										? 'bg-blue-100 text-blue-700 shadow-sm'
-										: 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+										: 'text-muted hover:text-default hover:bg-hover'
 										}`}
 								>
 									{tab.label}
@@ -110,8 +99,8 @@ export default function DashboardView({ enabledFeatures }: Props) {
 			</nav>
 
 			{/* Main Content */}
-			<main className=" mx-auto px-6 py-8">
-				<div className="rounded-xl shadow-sm  p-6">
+			<main className="max-w-7xl mx-auto px-6 py-8">
+				<div className="rounded-xl shadow-sm bg-primary border-default p-6">
 					{renderTabContent()}
 				</div>
 			</main>
