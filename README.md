@@ -25,7 +25,18 @@ Track your progress, visualize streaks, and stay motivated – all without leavi
 
 ## Screenshots
 
-*(Optional: Add image links here after uploading to your repo’s `/docs` folder or GitHub Issues for hosting.)*
+### Dashboard
+![Zenboard Dashboard](docs/screenshot-dashboard.png)
+
+### Monthly Analytics 
+![Zenboard Monthly Overview](docs/screenshot-monthly-overview.png)
+
+### Yearly Analytics 
+![Zenboard Yearly Overview](docs/screenshot-yearly-overview.png)
+
+### All Habits View 
+![Zenboard All Habits ](docs/screenshot-all-habits.png)
+
 
 ## Settings
 
