@@ -67,12 +67,12 @@ export default function DashboardView({ enabledFeatures }: Props) {
 							Zenboard
 						</h1>
 					</div>
-					<div className="flex items-center space-x-3">
-						<button className="flex items-center px-4 py-2 text-sm font-medium text-muted hover:text-default hover:bg-hover transition-colors duration-200">
-							<Settings className="w-4 h-4 mr-2" />
-							Settings
-						</button>
-					</div>
+					{/* <div className="flex items-center space-x-3"> */}
+					{/* 	<button className="flex items-center px-4 py-2 text-sm font-medium text-muted hover:text-default hover:bg-hover transition-colors duration-200"> */}
+					{/* 		<Settings className="w-4 h-4 mr-2" /> */}
+					{/* 		Settings */}
+					{/* 	</button> */}
+					{/* </div> */}
 				</div>
 			</header>
 
@@ -89,8 +89,8 @@ export default function DashboardView({ enabledFeatures }: Props) {
 										key={tab.id}
 										onClick={() => setActiveTab(tab.id)}
 										className={`px-6 py-3 text-sm font-medium transition-all duration-200 flex items-center gap-2 rounded-m ${activeTab === tab.id
-												? 'bg-blue-100 text-blue-700 shadow-sm'
-												: 'text-muted hover:text-default hover:bg-hover'
+											? 'bg-blue-100 text-blue-700 shadow-sm'
+											: 'text-muted hover:text-default hover:bg-hover'
 											}`}
 									>
 										<IconComponent className="w-4 h-4" />

@@ -8,5 +8,5 @@
 	"authorUrl": "https://github.com/shadAbdullah/zenboard",
 	"fundingUrl": "https://github.com/sponsors/shadAbdullah",
 	"main": "main.js",
-	"isDesktopOnly": false
+	"isDesktopOnly": true
 }

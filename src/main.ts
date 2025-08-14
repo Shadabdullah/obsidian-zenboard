@@ -5,8 +5,6 @@ import {
 	MarkdownView,
 	Modal,
 	Plugin,
-	PluginSettingTab,
-	Setting
 } from 'obsidian';
 
 import { ZenboardDashboardView, VIEW_TYPE_ZENBOARD } from './views/ZenboardView';
@@ -37,7 +35,7 @@ export default class ZenboardPlugin extends Plugin {
 		);
 
 		// ✅ Ribbon Icon to open React pane
-		const ribbonIconEl = this.addRibbonIcon('check-circle', 'Zenboard: Open Dashboard', async () => {
+		const ribbonIconEl = this.addRibbonIcon('target', 'Zenboard: Open Dashboard', async () => {
 			await this.activateDashboardView();
 		});
 		ribbonIconEl.addClass('zenboard-ribbon-icon');
@@ -82,7 +80,7 @@ export default class ZenboardPlugin extends Plugin {
 		});
 
 		// ✅ Settings Tab
-		this.addSettingTab(new ZenboardSettingTab(this.app, this));
+		//this.addSettingTab(new ZenboardSettingTab(this.app, this));
 
 		// ✅ DOM Event
 		this.registerDomEvent(document, 'click', (evt: MouseEvent) => {
@@ -138,28 +136,28 @@ class ZenboardWelcomeModal extends Modal {
 	}
 }
 
-// ✅ Settings UI
-class ZenboardSettingTab extends PluginSettingTab {
-	plugin: ZenboardPlugin;
-
-	constructor(app: App, plugin: ZenboardPlugin) {
-		super(app, plugin);
-		this.plugin = plugin;
-	}
-
-	display(): void {
-		const { containerEl } = this;
-		containerEl.empty();
-
-		new Setting(containerEl)
-			.setName('Default Project')
-			.setDesc('Tasks will be added to this project by default.')
-			.addText(text => text
-				.setPlaceholder('inbox')
-				.setValue(this.plugin.settings.defaultProject)
-				.onChange(async (value) => {
-					this.plugin.settings.defaultProject = value;
-					await this.plugin.saveSettings();
-				}));
-	}
-}
+// // ✅ Settings UI
+// class ZenboardSettingTab extends PluginSettingTab {
+// 	plugin: ZenboardPlugin;
+//
+// 	constructor(app: App, plugin: ZenboardPlugin) {
+// 		super(app, plugin);
+// 		this.plugin = plugin;
+// 	}
+//
+// 	display(): void {
+// 		const { containerEl } = this;
+// 		containerEl.empty();
+//
+// 		new Setting(containerEl)
+// 			.setName('Default Project')
+// 			.setDesc('Tasks will be added to this project by default.')
+// 			.addText(text => text
+// 				.setPlaceholder('inbox')
+// 				.setValue(this.plugin.settings.defaultProject)
+// 				.onChange(async (value) => {
+// 					this.plugin.settings.defaultProject = value;
+// 					await this.plugin.saveSettings();
+// 				}));
+// 	}
+// }
