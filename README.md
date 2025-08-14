@@ -42,18 +42,24 @@ Track your progress, visualize streaks, and stay motivated – all without leavi
 
 - **Default project** – choose where new habits are stored
 - **Theme & icons** – customize habit appearance
-- **Notification reminders** *(desktop only)*
+- **Notification reminders** *(comming soon)*
 
 ## For Developers
 
-If you want to contribute or customize:
+If you want to contribute or customize the plugin:
 
 ```bash
-# Clone into your vault’s plugins folder
+# Clone the repository into your vault’s plugins folder
 git clone https://github.com/shadabdullah/obsidian-zenboard .obsidian/plugins/zenboard
 
 cd .obsidian/plugins/zenboard
 npm install
 
-# Build in watch mode
-npm run dev
+# Development: watch JS + Tailwind CSS for live updates
+npm run dev:watch
+
+# Build once for production (generates JS + CSS)
+npm run build
+
+# Clean build: remove old files and rebuild everything
+npm run clean-build

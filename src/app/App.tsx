@@ -1,5 +1,4 @@
 import DashboardView from "../features/dashboard/DashboardView";
-import '../../styles.css'; // Tailwind styles or your global styles
 
 const userSettings = {
 	habitTracker: true,
@@ -13,3 +12,5 @@ export default function App() {
 		</div>
 	);
 }
+
+

@@ -4,10 +4,11 @@
 	"description": "🧠 ZenBoard – A powerful  habit planner plugin for Obsidian",
 	"main": "main.js",
 	"scripts": {
-		"tw": "tailwindcss -i ./src/input.css -o ./styles.css --watch",
+		"tw": "tailwindcss -i ./src/input.css -o ./styles.css",
 		"dev": "node esbuild.config.mjs",
-		"dev:watch": "concurrently \"npm run tw\" \"npm run dev\"",
-		"build": "tsc --noEmit --skipLibCheck && node esbuild.config.mjs production",
+		"dev:watch": "concurrently \"npm run tw -- --watch\" \"npm run dev\"",
+		"build": "npm run tw && tsc --noEmit --skipLibCheck && node esbuild.config.mjs production",
+		"clean-build": "rm -f main.js styles.css && npm run build",
 		"version": "node version-bump.mjs && git add manifest.json versions.json"
 	},
 	"keywords": [
