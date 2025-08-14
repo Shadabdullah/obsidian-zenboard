@@ -1,22 +1,16 @@
 
 import React, { useState, useEffect } from "react";
 import {
-	CheckCircle,
 	Target,
 	DollarSign,
-	Calendar,
 	Settings
 } from "lucide-react";
 
-import TodosView from "../todos/TodosView";
 import ExpensesView from "../expenses/ExpensesView";
 import HabitsView from "../habits/HabitsView";
-import CalendarView from "../calendar/CalendarView";
 
 type EnabledFeatures = {
 	habitTracker: boolean;
-	todoPlanner: boolean;
-	calendarPlanner: boolean;
 	expenseManager: boolean;
 };
 
@@ -37,8 +31,6 @@ export default function DashboardView({ enabledFeatures }: Props) {
 		// Set first available tab as active
 		if (enabledFeatures.habitTracker) setActiveTab("habits");
 		else if (enabledFeatures.expenseManager) setActiveTab("expenses");
-		else if (enabledFeatures.todoPlanner) setActiveTab("todos");
-		else if (enabledFeatures.calendarPlanner) setActiveTab("calendar");
 	}, [enabledFeatures]);
 
 
@@ -55,19 +47,6 @@ export default function DashboardView({ enabledFeatures }: Props) {
 			label: "💰 Expense Manager",
 			enabled: enabledFeatures.expenseManager,
 			icon: DollarSign,
-		},
-		{
-			id: "todos",
-			label: "📋 ToDos",
-			enabled: enabledFeatures.todoPlanner,
-			icon: CheckCircle,
-		},
-
-		{
-			id: "calendar",
-			label: "📅 Calendar",
-			enabled: enabledFeatures.calendarPlanner,
-			icon: Calendar,
 		},
 
 	];

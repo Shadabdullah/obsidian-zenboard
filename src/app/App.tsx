@@ -3,8 +3,6 @@ import '../../styles.css'; // Tailwind styles or your global styles
 
 const userSettings = {
 	habitTracker: true,
-	todoPlanner: true,
-	calendarPlanner: true,
 	expenseManager: true,
 };
 
