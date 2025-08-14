@@ -38,11 +38,6 @@ Track your progress, visualize streaks, and stay motivated – all without leavi
 ![Zenboard All Habits ](docs/screenshot-all-habits.png)
 
 
-## Settings
-
-- **Default project** – choose where new habits are stored
-- **Theme & icons** – customize habit appearance
-- **Notification reminders** *(comming soon)*
 
 ## For Developers
 
