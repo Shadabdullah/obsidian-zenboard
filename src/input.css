@@ -4,88 +4,106 @@
 
 /* ===== 🎨 Backgrounds ===== */
 .bg-primary {
-  background-color: var(--background-primary);
+	background-color: var(--background-primary);
 }
+
 .bg-secondary {
-  background-color: var(--background-secondary);
+	background-color: var(--background-secondary);
 }
+
 .bg-hover {
-  background-color: var(--background-modifier-hover);
+	background-color: var(--background-modifier-hover);
 }
+
 .bg-active-hover {
-  background-color: var(--background-modifier-active-hover);
+	background-color: var(--background-modifier-active-hover);
 }
 
 /* ===== 🪟 Borders ===== */
 .border-default {
-  border: 1px solid var(--background-modifier-border);
+	border: 1px solid var(--background-modifier-border);
 }
+
 .border-hover {
-  border-color: var(--background-modifier-border-hover);
+	border-color: var(--background-modifier-border-hover);
 }
+
 .border-focus {
-  border-color: var(--background-modifier-border-focus);
+	border-color: var(--background-modifier-border-focus);
 }
 
 /* ===== 🖋 Text Colors ===== */
 .text-default {
-  color: var(--text-normal);
+	color: var(--text-normal);
 }
+
 .text-muted {
-  color: var(--text-muted);
+	color: var(--text-muted);
 }
+
 .text-faint {
-  color: var(--text-faint);
+	color: var(--text-faint);
 }
+
 .text-accent {
-  color: var(--text-accent);
+	color: var(--text-accent);
 }
+
 .text-accent-hover:hover {
-  color: var(--text-accent-hover);
+	color: var(--text-accent-hover);
 }
+
 .text-on-accent {
-  color: var(--text-on-accent);
+	color: var(--text-on-accent);
 }
 
 /* ===== 🧩 Interactive ===== */
 .btn-base {
-  background-color: var(--interactive-normal);
-  color: var(--text-on-accent);
+	background-color: var(--interactive-normal);
+	color: var(--text-on-accent);
 }
+
 .btn-base:hover {
-  background-color: var(--interactive-hover);
+	background-color: var(--interactive-hover);
 }
+
 .btn-accent {
-  background-color: var(--interactive-accent);
-  color: var(--text-on-accent);
+	background-color: var(--interactive-accent);
+	color: var(--text-on-accent);
 }
+
 .btn-accent:hover {
-  background-color: var(--interactive-accent-hover);
+	background-color: var(--interactive-accent-hover);
 }
 
 /* ===== 📏 Spacing ===== */
 .px-4-1 {
-  padding-left: var(--size-4-1);
-  padding-right: var(--size-4-1);
+	padding-left: var(--size-4-1);
+	padding-right: var(--size-4-1);
 }
+
 .py-4-2 {
-  padding-top: var(--size-4-2);
-  padding-bottom: var(--size-4-2);
+	padding-top: var(--size-4-2);
+	padding-bottom: var(--size-4-2);
 }
+
 .gap-4-3 {
-  gap: var(--size-4-3);
+	gap: var(--size-4-3);
 }
+
 .m-4-4 {
-  margin: var(--size-4-4);
+	margin: var(--size-4-4);
 }
 
 /* ===== 🌀 Border Radius ===== */
 .rounded-s {
-  border-radius: var(--radius-s);
+	border-radius: var(--radius-s);
 }
+
 .rounded-m {
-  border-radius: var(--radius-m);
+	border-radius: var(--radius-m);
 }
+
 .rounded-l {
-  border-radius: var(--radius-l);
+	border-radius: var(--radius-l);
 }

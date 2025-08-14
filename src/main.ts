@@ -1,4 +1,3 @@
-
 import { initStorage } from '@features/habits/utils';
 import {
 	App,
@@ -10,58 +9,56 @@ import {
 	Setting
 } from 'obsidian';
 
-import { ZentaskDashboardView, VIEW_TYPE_ZENTASK } from './views/ZentaskView';
+import { ZenboardDashboardView, VIEW_TYPE_ZENBOARD } from './views/ZenboardView';
 
 // ✅ Plugin Settings Interface
-interface ZenTaskSettings {
+interface ZenboardSettings {
 	defaultProject: string;
 }
 
-const DEFAULT_SETTINGS: ZenTaskSettings = {
+const DEFAULT_SETTINGS: ZenboardSettings = {
 	defaultProject: 'inbox'
 };
 
 // ✅ Main Plugin Class
-export default class ZenTaskPlugin extends Plugin {
-	settings: ZenTaskSettings;
+export default class ZenboardPlugin extends Plugin {
+	settings: ZenboardSettings;
 
 	async onload() {
 		await this.loadSettings();
 
-
 		// Storage
-
 		await initStorage(this);
 
 		// ✅ Register custom view
 		this.registerView(
-			VIEW_TYPE_ZENTASK,
-			(leaf) => new ZentaskDashboardView(leaf)
+			VIEW_TYPE_ZENBOARD,
+			(leaf) => new ZenboardDashboardView(leaf)
 		);
 
 		// ✅ Ribbon Icon to open React pane
-		const ribbonIconEl = this.addRibbonIcon('check-circle', 'ZenTask: Open Dashboard', async () => {
+		const ribbonIconEl = this.addRibbonIcon('check-circle', 'Zenboard: Open Dashboard', async () => {
 			await this.activateDashboardView();
 		});
-		ribbonIconEl.addClass('zentask-ribbon-icon');
+		ribbonIconEl.addClass('zenboard-ribbon-icon');
 
 		// ✅ Status Bar
 		const statusBarItemEl = this.addStatusBarItem();
-		statusBarItemEl.setText('ZenTask Active');
+		statusBarItemEl.setText('Zenboard Active');
 
 		// ✅ Simple Command
 		this.addCommand({
-			id: 'zentask-open-modal',
-			name: 'ZenTask: Show Welcome Modal',
+			id: 'zenboard-open-modal',
+			name: 'Zenboard: Show Welcome Modal',
 			callback: () => {
-				new ZenTaskWelcomeModal(this.app).open();
+				new ZenboardWelcomeModal(this.app).open();
 			}
 		});
 
 		// ✅ Editor Command
 		this.addCommand({
-			id: 'zentask-insert-task',
-			name: 'ZenTask: Insert Task Template',
+			id: 'zenboard-insert-task',
+			name: 'Zenboard: Insert Task Template',
 			editorCallback: (editor: Editor, view: MarkdownView) => {
 				const selected = editor.getSelection();
 				const task = `- [ ] ${selected || 'New Task'}`;
@@ -71,13 +68,13 @@ export default class ZenTaskPlugin extends Plugin {
 
 		// ✅ Command with Condition
 		this.addCommand({
-			id: 'zentask-show-modal-if-md',
-			name: 'ZenTask: Conditional Modal',
+			id: 'zenboard-show-modal-if-md',
+			name: 'Zenboard: Conditional Modal',
 			checkCallback: (checking: boolean) => {
 				const markdownView = this.app.workspace.getActiveViewOfType(MarkdownView);
 				if (markdownView) {
 					if (!checking) {
-						new ZenTaskWelcomeModal(this.app).open();
+						new ZenboardWelcomeModal(this.app).open();
 					}
 					return true;
 				}
@@ -85,29 +82,27 @@ export default class ZenTaskPlugin extends Plugin {
 		});
 
 		// ✅ Settings Tab
-		this.addSettingTab(new ZenTaskSettingTab(this.app, this));
+		this.addSettingTab(new ZenboardSettingTab(this.app, this));
 
 		// ✅ DOM Event
 		this.registerDomEvent(document, 'click', (evt: MouseEvent) => {
-			console.debug('ZenTask click event', evt);
+			console.debug('Zenboard click event', evt);
 		});
 
 		// ✅ Interval Example
 		this.registerInterval(window.setInterval(() => {
-			console.debug('ZenTask heartbeat...');
+			console.debug('Zenboard heartbeat...');
 		}, 10 * 60 * 1000)); // 10 minutes
 	}
 
 	onunload() {
-		console.log('ZenTask unloaded');
+		console.log('Zenboard unloaded');
 	}
 
 	// ✅ Load & Save Plugin Settings
 	async loadSettings() {
 		this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
-
 	}
-
 
 	async saveSettings() {
 		await this.saveData(this.settings);
@@ -121,23 +116,21 @@ export default class ZenTaskPlugin extends Plugin {
 		console.log("✅ Main workspace leaf found. Setting view state...");
 
 		await leaf.setViewState({
-			type: VIEW_TYPE_ZENTASK,
+			type: VIEW_TYPE_ZENBOARD,
 			active: true,
 		});
 	}
-
-
 }
 
 // ✅ Modal Class
-class ZenTaskWelcomeModal extends Modal {
+class ZenboardWelcomeModal extends Modal {
 	constructor(app: App) {
 		super(app);
 	}
 
 	onOpen() {
 		const { contentEl } = this;
-		contentEl.setText('Welcome to ZenTask! 🎯');
+		contentEl.setText('Welcome to Zenboard! 🎯');
 	}
 
 	onClose() {
@@ -146,10 +139,10 @@ class ZenTaskWelcomeModal extends Modal {
 }
 
 // ✅ Settings UI
-class ZenTaskSettingTab extends PluginSettingTab {
-	plugin: ZenTaskPlugin;
+class ZenboardSettingTab extends PluginSettingTab {
+	plugin: ZenboardPlugin;
 
-	constructor(app: App, plugin: ZenTaskPlugin) {
+	constructor(app: App, plugin: ZenboardPlugin) {
 		super(app, plugin);
 		this.plugin = plugin;
 	}

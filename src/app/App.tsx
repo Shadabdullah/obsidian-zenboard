@@ -8,7 +8,7 @@ const userSettings = {
 
 export default function App() {
 	return (
-		<div id="zentask-container">
+		<div id="zenboard-container">
 			<DashboardView enabledFeatures={userSettings} />
 		</div>
 	);

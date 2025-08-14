@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo, useCallback } from "react";
 import { AnalyticsData, ProcessedHabitData, StoredHabit } from "@habits/types";
 import HabitIcon from "./Form/iconsmap";
 import { Calendar } from "lucide-react";
@@ -15,7 +15,31 @@ const AnalyticsGrid: React.FC<AnalyticsGridProps> = ({
 	analyticsData,
 	viewType,
 }) => {
-	const getProgressRing = (percentage: number, habit: StoredHabit) => {
+
+	const getMonthName = useCallback((monthIndex: number) => {
+		const months = [
+			"Jan", "Feb", "Mar", "Apr", "May", "Jun",
+			"Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
+		];
+		return months[monthIndex] || "Unknown";
+	}, []);
+
+
+
+
+	// Memoize date calculations to avoid recalculating on every render
+	const dateInfo = useMemo(() => {
+		const currentDate = new Date();
+		const year = currentDate.getFullYear();
+		const month = currentDate.getMonth();
+		const monthName = getMonthName(month);
+		const daysInMonth = new Date(year, month + 1, 0).getDate();
+		const firstDayOfMonth = new Date(year, month, 1).getDay();
+
+		return { year, month, monthName, daysInMonth, firstDayOfMonth };
+	}, []); // Empty dependency array since we want current date info
+
+	const getProgressRing = useCallback((percentage: number, habit: StoredHabit) => {
 		const circumference = 2 * Math.PI * 16;
 		const strokeDasharray = `${(percentage / 100) * circumference} ${circumference}`;
 
@@ -36,7 +60,7 @@ const AnalyticsGrid: React.FC<AnalyticsGridProps> = ({
 						strokeLinecap="round"
 						fill="transparent"
 						strokeDasharray={strokeDasharray}
-						style={{ stroke: habit.color }} // ✅ apply color here
+						style={{ stroke: habit.color }}
 						d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
 					/>
 				</svg>
@@ -47,53 +71,10 @@ const AnalyticsGrid: React.FC<AnalyticsGridProps> = ({
 				</div>
 			</div>
 		);
-	};
+	}, []);
 
-	const getMonthName = (monthIndex: number) => {
-		const months = [
-			"Jan",
-			"Feb",
-			"Mar",
-			"Apr",
-			"May",
-			"Jun",
-			"Jul",
-			"Aug",
-			"Sep",
-			"Oct",
-			"Nov",
-			"Dec",
-		];
-		return months[monthIndex] || "Unknown";
-	};
-
-	const renderMonthlyHeatmap = (processedData: ProcessedHabitData) => {
-		const {
-			habit,
-			dataPeriod,
-			completedDays,
-			totalDays,
-			percentage,
-			currentStreak,
-			longestStreak,
-		} = processedData;
-
-		// Get the monthly data from dataPeriod
-		const monthlyData =
-			"monthlyData" in dataPeriod ? dataPeriod.monthlyData : [];
-
-		console.log(monthlyData)
-
-		const currentDate = new Date();
-		const year = currentDate.getFullYear();
-		const month = currentDate.getMonth();
-		const monthName = getMonthName(month);
-
-		// Get days in current month
-		const daysInMonth = new Date(year, month + 1, 0).getDate();
-		const firstDayOfMonth = new Date(year, month, 1).getDay();
-
-		// Create calendar grid for the month
+	// Memoize calendar generation to avoid recalculating
+	const generateCalendarDays = useCallback((monthlyData: number[][], daysInMonth: number, firstDayOfMonth: number) => {
 		const calendarDays = [];
 
 		// Add empty cells for days before month starts
@@ -119,12 +100,36 @@ const AnalyticsGrid: React.FC<AnalyticsGridProps> = ({
 			calendarDays.push(0);
 		}
 
+		return calendarDays;
+	}, []);
+
+	const renderMonthlyHeatmap = useCallback((processedData: ProcessedHabitData) => {
+		const {
+			habit,
+			dataPeriod,
+			completedDays,
+			totalDays,
+			percentage,
+			currentStreak,
+			longestStreak,
+		} = processedData;
+
+		// Get the monthly data from dataPeriod
+		const monthlyData = "monthlyData" in dataPeriod ? dataPeriod.monthlyData : [];
+
+
+		const { year, month, monthName, daysInMonth, firstDayOfMonth } = dateInfo;
+
+		// Use memoized calendar generation
+		const calendarDays = generateCalendarDays(monthlyData, daysInMonth, firstDayOfMonth);
+
+
 		return (
 			<>
 				{/* Header section */}
 				<div className="relative flex items-center gap-4 mb-5">
 					<div
-						className="w-14 h-14 rounded-l flex items-center justify-center shadow-lg transition-all duration-300 group-hover:scale-110 group-hover:shadow-xl"
+						className="w-14 h-14 rounded-xl flex items-center justify-center shadow-lg transition-all duration-300 group-hover:scale-110 group-hover:shadow-xl"
 						style={{ backgroundColor: habit.color }}
 					>
 						<span className="text-white text-xl font-medium">
@@ -158,7 +163,7 @@ const AnalyticsGrid: React.FC<AnalyticsGridProps> = ({
 
 				{/* Monthly calendar heatmap */}
 				<div className="relative mb-5">
-					<div className="bg-hover rounded-m p-4 border-hover">
+					<div className="bg-primary rounded-xl p-4 border-hover">
 						{/* Day labels */}
 						<div className="grid grid-cols-7 gap-1 mb-2">
 							{["S", "M", "T", "W", "T", "F", "S"].map((day, index) => (
@@ -296,9 +301,9 @@ const AnalyticsGrid: React.FC<AnalyticsGridProps> = ({
 				</div>
 			</>
 		);
-	};
+	}, [dateInfo, getProgressRing, generateCalendarDays]);
 
-	const renderYearlyHeatmap = (processedData: ProcessedHabitData) => {
+	const renderYearlyHeatmap = useCallback((processedData: ProcessedHabitData) => {
 		const {
 			habit,
 			dataPeriod,
@@ -310,13 +315,8 @@ const AnalyticsGrid: React.FC<AnalyticsGridProps> = ({
 		} = processedData;
 
 		// Get the overall data from dataPeriod
-		const overallData =
-			"overallData" in dataPeriod ? dataPeriod.overallData : [];
-
-		const currentDate = new Date();
-		const year = currentDate.getFullYear();
-		const month = currentDate.getMonth();
-		const monthName = getMonthName(month);
+		const overallData = "overallData" in dataPeriod ? dataPeriod.overallData : [];
+		const { year, month, monthName } = dateInfo;
 
 		return (
 			<>
@@ -339,8 +339,6 @@ const AnalyticsGrid: React.FC<AnalyticsGridProps> = ({
 							<h3 className="font-bold text-lg text-default leading-tight break-words uppercase">
 								{habit.name}
 							</h3>
-							{/* Optional: Add a subtitle or description if needed */}
-							{/* <p className="text-sm text-muted mt-0.5">Daily habit</p> */}
 						</div>
 
 						{/* Progress Ring - Moved to top right */}
@@ -401,7 +399,6 @@ const AnalyticsGrid: React.FC<AnalyticsGridProps> = ({
 									style={{ color: habit.color }}
 								/>
 								<span className="text-default font-semibold">
-									{}
 								</span>
 							</span>
 							<span className="text-muted">
@@ -487,7 +484,7 @@ const AnalyticsGrid: React.FC<AnalyticsGridProps> = ({
 
 				{/* Compact yearly heatmap - single continuous grid */}
 				<div className="relative mb-4">
-					<div className="bg-hover rounded-m p-3 border-hover">
+					<div className="bg-primary  rounded-m p-3 border-hover">
 						{/* Main grid - using flexbox to create compact rows */}
 						<div className="flex flex-wrap gap-0.5 justify-center">
 							{overallData.map((day, dayIndex) => (
@@ -567,16 +564,16 @@ const AnalyticsGrid: React.FC<AnalyticsGridProps> = ({
 				</div>
 			</>
 		);
-	};
+	}, [dateInfo, getProgressRing]);
 
-	const hasHabitsWithData = Array.isArray(habits) && habits.some((habit) => {
-		if (!habit || typeof habit.id === "undefined") return false;
-
-		const processedData = analyticsData?.[habit.id]?.[viewType] ?? [];
-
-		// Explicitly check for presence, not just truthiness
-		return processedData !== undefined && processedData !== null;
-	});
+	// Memoize the hasHabitsWithData calculation
+	const hasHabitsWithData = useMemo(() => {
+		return Array.isArray(habits) && habits.some((habit) => {
+			if (!habit || typeof habit.id === "undefined") return false;
+			const processedData = analyticsData?.[habit.id]?.[viewType] ?? [];
+			return processedData !== undefined && processedData !== null;
+		});
+	}, [habits, analyticsData, viewType]);
 
 	// If no habits or no valid data, show placeholder
 	if (!Array.isArray(habits) || habits.length === 0 || !hasHabitsWithData) {
@@ -598,21 +595,21 @@ const AnalyticsGrid: React.FC<AnalyticsGridProps> = ({
 				return (
 					<div
 						key={habit.id}
-						className="relative overflow-hidden bg-secondary border-default rounded-l p-6 shadow-sm hover:shadow-lg transition-all duration-300 ease-out hover:scale-[1.02] hover:-translate-y-1 group"
+						className="relative overflow-hidden bg-secondary border-default rounded-xl p-6 shadow-sm hover:shadow-lg transition-all duration-300 ease-out hover:scale-[1.02] hover:-translate-y-1 group"
 						style={{
 							boxShadow:
 								"0 4px 20px rgba(0,0,0,0.06), 0 2px 8px rgba(0,0,0,0.04)",
 						}}
 					>
 						{/* Subtle gradient overlay */}
-						<div className="absolute inset-0 bg-gradient-to-br from-white/40 via-transparent to-gray-50/40 pointer-events-none" />
+						<div className="absolute inset-0 pointer-events-none" />
 
 						{viewType === "monthly"
 							? renderMonthlyHeatmap(processedData)
 							: renderYearlyHeatmap(processedData)}
 
 						{/* iOS-style card indicator */}
-						<div className="absolute top-3 right-3 w-1 h-6 bg-gradient-to-b from-gray-200 to-transparent rounded-full opacity-30" />
+						<div className="absolute top-3 right-3 w-1 h-6  rounded-full opacity-30" />
 					</div>
 				);
 			})}

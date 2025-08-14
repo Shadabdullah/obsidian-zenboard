@@ -53,19 +53,19 @@ const HabitView: React.FC = () => {
 	return (
 		<div className="min-h-screen transition-all duration-500 ease-in-out bg-primary">
 			{/* Status Bar Spacer */}
-			<div className="h-11"></div>
+			<div className="h-4"></div>
 
 			<div className="max-w-6xl mx-auto px-4 pb-8">
 				{/* Header */}
-				<div className="mb-8">
-					<div className="rounded-l border-default p-6 transition-all duration-500 ease-in-out bg-secondary shadow-sm">
+				<div className="mb-2">
+					<div className="rounded-xl border-default px-6 py-2 transition-all duration-500 ease-in-out bg-secondary shadow-sm">
 						<div className="flex items-center justify-between">
 							<div className="flex items-center gap-4">
 								{(currentView === "analytics" ||
 									currentView === "all-habits") && (
 										<button
 											onClick={() => setCurrentView("habits")}
-											className="w-9 h-9 rounded-full flex items-center justify-center transition-all duration-300 ease-in-out bg-hover hover:bg-active-hover active:scale-95"
+											className="w-9 h-9 rounded-xl flex items-center justify-center transition-all duration-300 ease-in-out bg-hover hover:bg-active-hover active:scale-95"
 										>
 											<ArrowLeft className="w-4 h-4 text-muted transition-colors duration-300" />
 										</button>
@@ -76,7 +76,7 @@ const HabitView: React.FC = () => {
 											ZenBoard
 										</h1>
 										{/* App Icon Badge */}
-										<div className="w-6 h-6 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-m flex items-center justify-center transition-all duration-300 ease-in-out">
+										<div className="w-6 h-6 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center transition-all duration-300 ease-in-out">
 											<span className="text-white text-xs font-bold">Z</span>
 										</div>
 									</div>
@@ -95,16 +95,10 @@ const HabitView: React.FC = () => {
 								</div>
 							</div>
 							<div className="flex items-center gap-3">
-								{/* Theme Toggle */}
-								<button
-									className="w-11 h-11 rounded-m flex items-center justify-center transition-all duration-300 ease-in-out bg-hover text-muted hover:bg-active-hover active:scale-95 shadow-sm"
-								>
-									<div className="transition-all duration-300 ease-in-out">
-									</div>
-								</button>
+
 
 								{/* Streak Indicator */}
-								<div className="bg-gradient-to-r from-orange-500 to-red-500 rounded-m px-3 py-2 transition-all duration-300 ease-in-out shadow-sm">
+								<div className="bg-gradient-to-r from-orange-500 to-red-500 rounded-xl px-3 py-2 transition-all duration-300 ease-in-out shadow-sm">
 									<div className="flex items-center gap-2">
 										<Flame className="w-4 h-4 text-white transition-all duration-300" />
 										<div className="text-white">
@@ -125,7 +119,7 @@ const HabitView: React.FC = () => {
 											currentView === "analytics" ? "habits" : "analytics",
 										)
 									}
-									className={`w-11 h-11 rounded-m flex items-center justify-center transition-all duration-300 ease-in-out shadow-sm active:scale-95 ${currentView === "analytics"
+									className={`w-11 h-11 rounded-xl flex items-center justify-center transition-all duration-300 ease-in-out shadow-sm active:scale-95 ${currentView === "analytics"
 										? "btn-accent"
 										: "btn-base hover:bg-active-hover"
 										}`}
@@ -141,7 +135,7 @@ const HabitView: React.FC = () => {
 				{currentView === "habits" ? (
 					<>
 						{/* Calendar */}
-						<div className="rounded-l border-default overflow-hidden mb-6 transition-all duration-500 ease-in-out bg-secondary shadow-sm">
+						<div className="rounded-xl border-default overflow-hidden mb-6 transition-all duration-500 ease-in-out bg-secondary shadow-sm px-6">
 							<Calendar
 								calendarData={calendarData}
 								selectedDate={selectedDate}
@@ -159,7 +153,7 @@ const HabitView: React.FC = () => {
 							<div className="flex gap-3">
 								<button
 									onClick={() => setIsModalOpen(true)}
-									className="inline-flex items-center gap-2 px-6 py-3 rounded-m font-medium transition-all duration-300 ease-in-out btn-accent shadow-sm hover:shadow-md active:scale-95"
+									className="inline-flex items-center gap-2 px-6 py-3  font-medium transition-all duration-300 ease-in-out btn-accent shadow-sm hover:shadow-md active:scale-95"
 								>
 									<Plus className="w-4 h-4 transition-all duration-300" />
 									Add New Habit
@@ -167,7 +161,7 @@ const HabitView: React.FC = () => {
 
 								<button
 									onClick={() => setCurrentView("all-habits")}
-									className="inline-flex items-center gap-2 px-6 py-3 rounded-m font-medium transition-all duration-300 ease-in-out btn-base hover:bg-active-hover text-default shadow-sm hover:shadow-md active:scale-95"
+									className="inline-flex items-center gap-2 px-6 py-3  font-medium transition-all duration-300 ease-in-out btn-base hover:bg-active-hover text-default shadow-sm hover:shadow-md active:scale-95"
 								>
 									<Grid className="w-4 h-4 transition-all duration-300" />
 									View All
@@ -194,7 +188,7 @@ const HabitView: React.FC = () => {
 									</div>
 								</div>
 
-								<div className="rounded-l border-default p-4 space-y-3 transition-all duration-500 ease-in-out bg-secondary shadow-sm">
+								<div className="rounded-xl border-default p-4 space-y-3 transition-all duration-500 ease-in-out bg-secondary shadow-sm">
 									{pendingHabits.length > 0 ? (
 										pendingHabits.map((task) => {
 											const progress =
@@ -225,7 +219,7 @@ const HabitView: React.FC = () => {
 									</div>
 								</div>
 
-								<div className="rounded-l border-default p-4 min-h-[200px] transition-all duration-500 ease-in-out bg-secondary shadow-sm">
+								<div className="rounded-xl border-default p-4 min-h-[200px] transition-all duration-500 ease-in-out bg-secondary shadow-sm">
 									{completedHabits.length > 0 ? (
 										<div className="space-y-3">
 											{completedHabits.map((task) => (
@@ -263,7 +257,7 @@ const HabitView: React.FC = () => {
 						</div>
 
 						{/* All Habits Grid */}
-						<div className="rounded-l border-default p-6 transition-all duration-500 ease-in-out bg-secondary shadow-sm">
+						<div className="rounded-xl border-default p-6 transition-all duration-500 ease-in-out bg-secondary shadow-sm">
 							{allHabits && allHabits.length > 0 ? (
 								<div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
 									{allHabits.map((habit) => (
@@ -285,7 +279,7 @@ const HabitView: React.FC = () => {
 					/* Analytics View */
 					<div className="space-y-6">
 						{/* Tab Selector */}
-						<div className="rounded-m p-1 inline-flex transition-all duration-500 ease-in-out bg-hover shadow-sm">
+						<div className="rounded-m p-1 inline-flex transition-all duration-500 ease-in-out bg-secondary shadow-sm space-x-2">
 							<button
 								onClick={() => setAnalyticsTab("monthly")}
 								className={`px-5 py-2.5 rounded-s font-medium text-sm transition-all duration-300 ease-in-out ${analyticsTab === "monthly"
@@ -307,7 +301,7 @@ const HabitView: React.FC = () => {
 						</div>
 
 						{/* Analytics Content */}
-						<div className="rounded-l border-default p-6 transition-all duration-500 ease-in-out bg-secondary shadow-sm">
+						<div className="rounded-xl border-default p-6 transition-all duration-500 ease-in-out bg-secondary shadow-sm">
 							<AnalyticsGrid
 								habits={allHabits}
 								analyticsData={analyticsData}

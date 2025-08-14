@@ -1,4 +1,4 @@
-import type ZenTaskPlugin from "@src/main";
+import type ZenBoardPlugin from "@src/main";
 
 let cache: Record<string, any> = {};
 let isLoaded = false;
@@ -6,13 +6,13 @@ let isLoaded = false;
 /**
  * Must be called in onload() before using get/set
  */
-export const initStorage = async (plugin: ZenTaskPlugin) => {
+export const initStorage = async (plugin: ZenBoardPlugin) => {
 	cache = (await plugin.loadData()) ?? {};
 	isLoaded = true;
 	pluginInstance = plugin;
 };
 
-let pluginInstance: ZenTaskPlugin | null = null;
+let pluginInstance: ZenBoardPlugin | null = null;
 
 export const getFromStorage = async <T>(key: string): Promise<T | null> => {
 	if (!isLoaded) {

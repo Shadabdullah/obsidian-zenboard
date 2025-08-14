@@ -1,12 +1,12 @@
 {
-  "id": "zentask",
-  "name": "ZenTask",
-  "version": "0.1.0",
-  "minAppVersion": "1.0.0",
-  "description": "A powerful task manager and planner inside Obsidian.",
-  "author": "Shad",
-  "authorUrl": "https://github.com/yourusername/zentask",
-  "fundingUrl": "https://github.com/sponsors/yourusername",
-  "main": "main.js",
-  "isDesktopOnly": false
+	"id": "zenboard",
+	"name": "ZenBoard",
+	"version": "0.1.0",
+	"minAppVersion": "1.0.0",
+	"description": "A powerful task manager and planner inside Obsidian.",
+	"author": "shadAbdullah",
+	"authorUrl": "https://github.com/shadAbdullah/zenboard",
+	"fundingUrl": "https://github.com/sponsors/shadAbdullah",
+	"main": "main.js",
+	"isDesktopOnly": false
 }

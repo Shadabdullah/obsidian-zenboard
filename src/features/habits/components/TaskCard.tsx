@@ -55,7 +55,7 @@ const TaskCard: React.FC<TaskCardProps> = ({ task, isCompleted, progress }) => {
 			className={`
         relative overflow-hidden
         bg-secondary
-        rounded-l
+        rounded-xl
         transition-all duration-300 ease-out
         active:scale-[0.98]
         shadow-sm
@@ -69,7 +69,7 @@ const TaskCard: React.FC<TaskCardProps> = ({ task, isCompleted, progress }) => {
 			}}
 		>
 			{/* Custom CSS for blinking animation */}
-			<style jsx>{`
+			<style>{`
         @keyframes blink {
           0%, 50% {
             opacity: 1;

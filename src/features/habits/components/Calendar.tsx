@@ -31,7 +31,7 @@ const Calendar: React.FC<CalendarProps> = ({
 	return (
 		<div className="relative px-4-1 py-4-2">
 			{/* Header section */}
-			<div className="flex items-center justify-between mb-6">
+			<div className="flex items-center justify-between mb-2">
 				<h2 className="text-xl font-semibold text-default tracking-tight">
 					Calendar
 				</h2>

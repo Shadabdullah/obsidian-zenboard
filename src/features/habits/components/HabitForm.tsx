@@ -226,7 +226,7 @@ const HabitForm: React.FC<HabitFormModalProps> = ({ isOpen, onClose }) => {
 		if (!habitName.trim()) return;
 
 		const formatedDate = formatLocalDate(startDate, endDate);
-		const formattedStartDate = "2025-7-1"
+		const formattedStartDate: string = formatedDate.formattedStart;
 		const formattedEndDate: string = formatedDate.formattedEnd;
 
 		const habitData: HabitData =
