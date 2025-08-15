@@ -1,7 +1,7 @@
 {
 	"id": "zenboard",
 	"name": "ZenBoard",
-	"version": "0.1.0",
+	"version": "1.0.0",
 	"minAppVersion": "1.6.5",
 	"description": "A simple yet powerful habit tracker to help you build and maintain daily routines inside Obsidian.",
 	"author": "Shad Abdullah",
