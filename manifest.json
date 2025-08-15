@@ -6,7 +6,6 @@
 	"description": "A simple yet powerful habit tracker to help you build and maintain daily routines inside Obsidian.",
 	"author": "Shad Abdullah",
 	"authorUrl": "https://github.com/shadabdullah/zenboard",
-	"fundingUrl": "https://github.com/sponsors/shadabdullah",
 	"main": "main.js",
 	"isDesktopOnly": true,
 	"license": "MIT"

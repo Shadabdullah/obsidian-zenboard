@@ -20,7 +20,7 @@ export default class ZenboardPlugin extends Plugin {
 
 		// Add command to open dashboard
 		this.addCommand({
-			id: 'zenboard-open-dashboard',
+			id: 'open-dashboard',
 			name: 'Open Zenboard',
 			callback: async () => {
 				await this.activateDashboardView();

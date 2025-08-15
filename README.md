@@ -1,7 +1,6 @@
 # Habit Tracker – Zenboard
 
-Habit Tracker – Zenboard is an Obsidian plugin that helps you build and maintain consistent daily habits directly inside your vault.  
-Track your progress, visualize streaks, and stay motivated – all without leaving Obsidian.
+Track, visualize, and maintain your daily habits directly in Obsidian. Build streaks, stay consistent, and keep everything in your vault.
 
 ## Features
 
