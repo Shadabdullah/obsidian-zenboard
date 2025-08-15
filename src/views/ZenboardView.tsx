@@ -27,7 +27,6 @@ export class ZenboardDashboardView extends ItemView {
 
 		const container = this.containerEl.children[1];
 		if (!container) {
-			console.error("❌ React container not found!");
 			return;
 		}
 		this.root = ReactDOM.createRoot(container);

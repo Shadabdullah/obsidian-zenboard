@@ -12,16 +12,21 @@ export default class ZenboardPlugin extends Plugin {
 			VIEW_TYPE_ZENBOARD,
 			(leaf) => new ZenboardDashboardView(leaf)
 		);
-		// ✅ Ribbon Icon to open React pane
-		const ribbonIconEl = this.addRibbonIcon('target', 'Zenboard: Open Dashboard', async () => {
-			await this.activateDashboardView();
-		});
+
+		// Ribbon icon to open React pane
+		const ribbonIconEl = this.addRibbonIcon(
+			'target',
+			'Zenboard: open dashboard',
+			async () => {
+				await this.activateDashboardView();
+			}
+		);
 		ribbonIconEl.addClass('zenboard-ribbon-icon');
 
 		// Add command to open dashboard
 		this.addCommand({
 			id: 'open-dashboard',
-			name: 'Open Zenboard',
+			name: 'Open zenboard',
 			callback: async () => {
 				await this.activateDashboardView();
 			}
@@ -30,10 +35,7 @@ export default class ZenboardPlugin extends Plugin {
 
 	async activateDashboardView() {
 		const leaf = this.app.workspace.getLeaf(false);
-		if (!leaf) {
-			console.warn("Zenboard: No workspace leaf found to open dashboard.");
-			return;
-		}
+		if (!leaf) return; // No console output, just fail silently for users
 		await leaf.setViewState({
 			type: VIEW_TYPE_ZENBOARD,
 			active: true,
@@ -41,5 +43,6 @@ export default class ZenboardPlugin extends Plugin {
 	}
 
 	onunload() {
+		this.app.workspace.detachLeavesOfType(VIEW_TYPE_ZENBOARD);
 	}
 }
