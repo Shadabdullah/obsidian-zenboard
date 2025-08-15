@@ -1,4 +1,3 @@
-import React from "react";
 import { DollarSign, Clock, Sparkles } from 'lucide-react';
 
 const ExpensesView = () => {

@@ -3,10 +3,11 @@
 	"name": "ZenBoard",
 	"version": "0.1.0",
 	"minAppVersion": "1.8.10",
-	"description": "A powerful task manager and planner inside Obsidian.",
+	"description": "A simple yet powerful habit tracker to help you build and maintain daily routines inside Obsidian.",
 	"author": "Shad Abdullah",
-	"authorUrl": "https://github.com/shadAbdullah/zenboard",
-	"fundingUrl": "https://github.com/sponsors/shadAbdullah",
+	"authorUrl": "https://github.com/shadabdullah/zenboard",
+	"fundingUrl": "https://github.com/sponsors/shadabdullah",
 	"main": "main.js",
-	"isDesktopOnly": true
+	"isDesktopOnly": true,
+	"license": "MIT"
 }
