@@ -60,14 +60,15 @@ const HabitForm: React.FC<HabitFormModalProps> = ({ isOpen, onClose }) => {
 	]);
 	const [repeatability, setRepeatability] = useState("weekdays");
 	const [repeatInterval, setRepeatInterval] = useState(1);
-	const [selectedColor, setSelectedColor] = useState("var(--color-accent)");
+	const [selectedColor, setSelectedColor] = useState("#6200ee"); // default accent color
 	const [selectedIcon, setSelectedIcon] = useState("Droplets");
+
 
 	// UI state
 	const [isRepeatDropdownOpen, setIsRepeatDropdownOpen] = useState(false);
 	const [showColorPicker, setShowColorPicker] = useState(false);
 	const [showIconPicker, setShowIconPicker] = useState(false);
-	const [customColor, setCustomColor] = useState("var(--color-accent)");
+	const [customColor, setCustomColor] = useState("#6200ee");
 
 	// ==============================================================================================
 	// CONSTANTS
@@ -85,20 +86,19 @@ const HabitForm: React.FC<HabitFormModalProps> = ({ isOpen, onClose }) => {
 
 	// Using Obsidian theme-compatible colors
 	const defaultColors = [
-		"var(--color-accent)",
-		"var(--color-green)",
-		"var(--color-orange)",
-		"var(--color-red)",
-		"var(--color-purple)",
-		"var(--color-pink)",
-		"var(--color-cyan)",
-		"var(--color-base-35)",
-		"var(--color-base-50)",
-		"var(--color-base-70)",
-		"var(--interactive-accent)",
-		"var(--text-accent)",
+		"#1E1E2F", // Deep blue-gray
+		"#2E8B57", // Vibrant green
+		"#FF8C42", // Warm orange
+		"#E63946", // Strong red
+		"#9D4EDD", // Bright purple
+		"#F72585", // Hot pink
+		"#4DD0E1", // Aqua / cyan
+		"#6B4226", // Brownish dark
+		"#3C3F41", // Neutral gray
+		"#5C5470", // Muted purple-gray
+		"#0077B6", // Interactive blue
+		"#F1FAEE", // Accent text (light for contrast)
 	];
-
 	const repeatOptions = [
 		{ value: "weekdays", label: "Selected week days" },
 		{ value: "daily", label: "Every day" },
@@ -299,12 +299,12 @@ const HabitForm: React.FC<HabitFormModalProps> = ({ isOpen, onClose }) => {
 			/>
 
 			{/* Main Modal Container */}
-			<div className="relative w-full max-w-4xl bg-primary rounded-l shadow-2xl transform transition-all duration-300 scale-100 opacity-100 max-h-[90vh] overflow-y-auto">
+			<div className="relative w-full max-w-4xl bg-primary rounded-xl shadow-2xl transform transition-all duration-300 scale-100 opacity-100 max-h-[90vh] overflow-y-auto">
 				{/* ======================================================================================== */}
 				{/* MODAL HEADER */}
 				{/* ======================================================================================== */}
 
-				<div className="sticky top-0 z-10 flex items-center justify-between p-6 bg-primary border-default rounded-t-l">
+				<div className="sticky top-0 z-10 flex items-center justify-between p-6 bg-primary border-default ">
 					<h1 className="text-default text-xl font-semibold">
 						New Habit
 					</h1>
@@ -336,7 +336,7 @@ const HabitForm: React.FC<HabitFormModalProps> = ({ isOpen, onClose }) => {
 									type="text"
 									value={habitName}
 									onChange={(e) => setHabitName(e.target.value)}
-									className="w-full bg-secondary border-default rounded-m px-4 py-3 text-default placeholder-muted focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all duration-200"
+									className="w-full h-10 bg-secondary border-default rounded-m px-4 py-3 text-default placeholder-muted focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all duration-200"
 									placeholder="Enter habit name"
 								/>
 							</div>
@@ -352,12 +352,12 @@ const HabitForm: React.FC<HabitFormModalProps> = ({ isOpen, onClose }) => {
 										<button
 											key={type}
 											onClick={() => setTrackingType(type)}
-											className={`flex flex-col items-center justify-center py-4 rounded-m transition-all duration-300 transform hover:scale-105 ${trackingType === type
-												? "btn-accent text-on-accent shadow-lg"
+											className={`flex flex-col items-center justify-center h-12 w-full p-2 transition-all duration-300 transform hover:scale-105 ${trackingType === type
+												? "bg-blue-500 text-on-accent shadow-lg"
 												: "bg-secondary text-muted hover:bg-hover"
 												}`}
 										>
-											<Icon size={24} className="mb-2" />
+
 											<span className="text-sm font-medium">{label}</span>
 										</button>
 									))}
@@ -509,9 +509,9 @@ const HabitForm: React.FC<HabitFormModalProps> = ({ isOpen, onClose }) => {
 										))}
 										<button
 											onClick={() => setShowColorPicker(true)}
-											className="w-8 h-8 rounded-m border-2 border-dashed border-hover flex items-center justify-center text-muted hover:scale-110 transition-all duration-200"
+											className="w-10 h-10 rounded-m border-2 border-dashed border-hover flex items-center justify-center text-muted hover:scale-110 transition-all duration-200"
 										>
-											<Plus size={16} />
+											<Plus size={20} />
 										</button>
 									</div>
 								</div>
@@ -534,7 +534,7 @@ const HabitForm: React.FC<HabitFormModalProps> = ({ isOpen, onClose }) => {
 										onClick={() =>
 											setIsRepeatDropdownOpen(!isRepeatDropdownOpen)
 										}
-										className="w-full flex items-center justify-between bg-secondary border-default rounded-m px-4 py-3 text-default transition-all duration-200 hover:bg-hover"
+										className="w-full h-10 bg-secondary border-default items-center justify-start text-default placeholder-muted focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all duration-200"
 									>
 										<span>
 											{
@@ -549,14 +549,14 @@ const HabitForm: React.FC<HabitFormModalProps> = ({ isOpen, onClose }) => {
 									</button>
 
 									{isRepeatDropdownOpen && (
-										<div className="absolute top-full left-0 right-0 mt-2 bg-primary border-default rounded-m shadow-lg z-20 overflow-hidden">
+										<div className="absolute top-full left-0 right-0 gap-y-2 mt-3 bg-primary border-default z-20 overflow-hidden">
 											{repeatOptions.map((option) => (
 												<button
 													key={option.value}
 													onClick={() =>
 														handleRepeatabilityChange(option.value)
 													}
-													className="w-full text-left px-4 py-3 text-default hover:bg-active-hover hover:text-accent transition-colors duration-150"
+													className="w-full mt-2 text-left px-4 py-3 text-default hover:bg-active-hover hover:text-accent transition-colors duration-150"
 												>
 													{option.label}
 												</button>
@@ -599,8 +599,8 @@ const HabitForm: React.FC<HabitFormModalProps> = ({ isOpen, onClose }) => {
 															? toggleDay(key)
 															: setSelectedDays([key])
 													}
-													className={`px-3 py-2 rounded-m text-sm font-medium transition-all duration-300 transform hover:scale-105 ${selectedDays.includes(key)
-														? "btn-accent text-on-accent shadow-lg"
+													className={`px-3 py-2 text-sm font-medium transition-all duration-300 transform hover:scale-105 ${selectedDays.includes(key)
+														? "bg-blue-500 text-on-accent shadow-lg"
 														: "bg-secondary text-muted hover:bg-hover"
 														}`}
 												>
@@ -616,14 +616,18 @@ const HabitForm: React.FC<HabitFormModalProps> = ({ isOpen, onClose }) => {
 								<label className="text-muted text-sm font-medium">
 									Reminders
 								</label>
-								<button className="w-full flex items-center justify-center bg-secondary rounded-m px-4 py-3 text-muted hover:bg-hover transition-all duration-200">
+								<button className="w-full h-10 flex items-center justify-center bg-secondary  px-4 py-3 text-muted hover:bg-hover transition-all duration-200">
 									<Bell size={20} className="mr-2" />
 									This feature is coming soon
 								</button>
 							</div>
 
 							{/* Date Pickers */}
-							<div className="space-y-4">
+							<div className="space-y-2">
+
+								<label className="text-muted text-sm font-medium">
+									Select date Range
+								</label>
 								<DatePicker
 									startDate={startDate}
 									endDate={endDate}

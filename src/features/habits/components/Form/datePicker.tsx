@@ -86,7 +86,7 @@ const DatePicker: React.FC<DatePickerProps> = ({
 			{/* Trigger Button */}
 			<button
 				onClick={() => setIsOpen(true)}
-				className="group w-full bg-secondary border-default rounded-m px-4 py-3 hover:bg-hover hover:border-hover transition-all duration-200 flex items-center justify-between"
+				className="group w-full h-10 bg-secondary border-default px-4 py-3 hover:bg-hover hover:border-hover transition-all duration-200 flex items-center justify-between"
 				aria-label="Open date picker"
 			>
 				<div className="flex items-center gap-3">
