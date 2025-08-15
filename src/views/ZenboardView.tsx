@@ -24,15 +24,12 @@ export class ZenboardDashboardView extends ItemView {
 	}
 
 	async onOpen() {
-		console.log("🧠 ZenboardDashboardView.onOpen triggered");
 
 		const container = this.containerEl.children[1];
 		if (!container) {
 			console.error("❌ React container not found!");
 			return;
 		}
-
-		console.log("✅ Mounting React app to:", container);
 		this.root = ReactDOM.createRoot(container);
 		this.root.render(<App />);
 	}
