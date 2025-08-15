@@ -1,83 +1,55 @@
 name: Release Obsidian Plugin
 
 on:
-    push:
-        tags:
-            - "*"
+  push:
+    tags:
+      - '*'
 
 jobs:
-    release:
-        runs-on: ubuntu-latest
-        permissions:
-            contents: write
-        steps:
-            - uses: actions/checkout@v4
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
 
-            - name: Setup Node.js
-              uses: actions/setup-node@v4
-              with:
-                  node-version: "20"
-                  cache: "npm"
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
 
-            - name: Install and build
-              run: |
-                  echo "=== Installing dependencies ==="
-                  npm ci
-                  echo "=== Building plugin ==="
-                  npm run build
-                  echo "=== Listing files after build ==="
-                  ls -la
-                  echo "=== Checking for required files ==="
-                  echo "main.js exists: $(test -f main.js && echo 'YES' || echo 'NO')"
-                  echo "manifest.json exists: $(test -f manifest.json && echo 'YES' || echo 'NO')"
-                  echo "styles.css exists: $(test -f styles.css && echo 'YES' || echo 'NO')"
+      - name: Install and build
+        run: |
+          npm ci
+          npm run build
 
-            - name: Package plugin
-              run: |
-                  echo "=== Creating plugin directory ==="
-                  PLUGIN_NAME="${{ github.event.repository.name }}"
-                  echo "Plugin name: $PLUGIN_NAME"
-                  mkdir "$PLUGIN_NAME"
+      - name: Package plugin
+        run: |
+          # Verify files exist
+          echo "Checking build files:"
+          ls -la main.js manifest.json styles.css
+          
+          # Create plugin directory and copy files
+          mkdir ${{ github.event.repository.name }}
+          cp main.js manifest.json styles.css ${{ github.event.repository.name }}/
+          
+          # Create zip
+          zip -r ${{ github.event.repository.name }}.zip ${{ github.event.repository.name }}
+          
+          # Verify zip was created and show contents
+          echo "Created zip file:"
+          ls -la ${{ github.event.repository.name }}.zip
+          echo "Zip contents:"
+          unzip -l ${{ github.event.repository.name }}.zip
 
-                  echo "=== Copying files ==="
-                  cp main.js "$PLUGIN_NAME/"
-                  echo "✓ Copied main.js"
-
-                  cp manifest.json "$PLUGIN_NAME/"
-                  echo "✓ Copied manifest.json"
-
-                  if [ -f "styles.css" ]; then
-                    cp styles.css "$PLUGIN_NAME/"
-                    echo "✓ Copied styles.css"
-                  else
-                    touch "$PLUGIN_NAME/styles.css"
-                    echo "✓ Created empty styles.css"
-                  fi
-
-                  echo "=== Contents of plugin directory ==="
-                  ls -la "$PLUGIN_NAME/"
-
-                  echo "=== Creating zip file ==="
-                  zip -r "$PLUGIN_NAME.zip" "$PLUGIN_NAME"
-
-                  echo "=== Zip file created ==="
-                  ls -la "$PLUGIN_NAME.zip"
-
-                  echo "=== Zip file contents ==="
-                  unzip -l "$PLUGIN_NAME.zip"
-
-            - name: Create release
-              uses: softprops/action-gh-release@v2
-              with:
-                  files: ${{ github.event.repository.name }}.zip
-              env:
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-            - name: Verify release
-              run: |
-                  echo "=== Release created successfully ==="
-                  echo "Tag: ${{ github.ref_name }}"
-                  echo "Repository: ${{ github.event.repository.name }}"
-                  echo "Zip file should be: ${{ github.event.repository.name }}.zip"
-              env:
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Create release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: ${{ github.event.repository.name }}.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
