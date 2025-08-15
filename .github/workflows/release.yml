@@ -3,7 +3,7 @@ name: Release Obsidian plugin
 on:
     push:
         tags:
-            - "*"
+            - "*" # Runs on any tag push, e.g., v1.0.0
 
 jobs:
     build:
@@ -18,18 +18,33 @@ jobs:
               with:
                   node-version: "18.x"
 
-            - name: Build plugin
+            - name: Install dependencies & build
               run: |
                   npm install
                   npm run build
 
-            - name: Create release
+            - name: Create plugin zip
+              run: |
+                  plugin_id=$(jq -r '.id' manifest.json)
+                  zip -r "${plugin_id}.zip" main.js manifest.json styles.css
+
+            - name: Create GitHub Release (draft)
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               run: |
                   tag="${GITHUB_REF#refs/tags/}"
 
+                  # Extract changelog notes for this tag
+                  if [ -f CHANGELOG.md ]; then
+                    release_notes=$(awk "/## \\[$tag\\]/{flag=1;next}/## /{flag=0}flag" CHANGELOG.md)
+                  else
+                    release_notes="Initial release"
+                  fi
+
+                  plugin_id=$(jq -r '.id' manifest.json)
+
                   gh release create "$tag" \
                     --title="$tag" \
                     --draft \
-                    main.js manifest.json styles.css
+                    --notes "$release_notes" \
+                    "${plugin_id}.zip" manifest.json
