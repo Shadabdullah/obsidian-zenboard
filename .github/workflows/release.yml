@@ -42,4 +42,4 @@ jobs:
                   gh release create "$tag" \
                     --title "$tag" \
                     --draft \
-                    "plugin-${tag}.zip"
+                    "zenboard-${tag}.zip"
