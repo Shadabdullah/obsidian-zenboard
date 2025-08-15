@@ -3,7 +3,7 @@ name: Release Obsidian Plugin
 on:
     push:
         tags:
-            - "*" # triggers on any tag push
+            - "*"
 
 jobs:
     release:
@@ -11,35 +11,32 @@ jobs:
         permissions:
             contents: write
         steps:
-            - name: Checkout repository
-              uses: actions/checkout@v3
+            - uses: actions/checkout@v4
 
             - name: Setup Node.js
-              uses: actions/setup-node@v3
+              uses: actions/setup-node@v4
               with:
-                  node-version: "18.x"
+                  node-version: "20"
+                  cache: "npm"
 
-            - name: Install dependencies & build
+            - name: Install and build
               run: |
-                  npm install
+                  npm ci
                   npm run build
 
-            - name: Install GitHub CLI
+            - name: Package plugin
               run: |
-                  sudo apt update
-                  sudo apt install gh -y
+                  mkdir ${{ github.event.repository.name }}
+                  cp main.js manifest.json styles.css ${{ github.event.repository.name }}/
+                  zip -r ${{ github.event.repository.name }}.zip ${{ github.event.repository.name }}
 
-            - name: Prepare plugin zip
-              run: |
-                  tag="${GITHUB_REF#refs/tags/}"
-                  zip "zenboard-${tag}.zip" main.js styles.css manifest.json
-
-            - name: Create GitHub release
+            - name: Create release
+              uses: softprops/action-gh-release@v2
+              with:
+                  files: |
+                      ${{ github.event.repository.name }}.zip
+                      main.js
+                      manifest.json
+                      styles.css
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-              run: |
-                  tag="${GITHUB_REF#refs/tags/}"
-                  gh release create "$tag" \
-                    --title "$tag" \
-                    --draft \
-                    "zenboard-${tag}.zip"
