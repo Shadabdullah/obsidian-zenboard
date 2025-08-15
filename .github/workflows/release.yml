@@ -1,35 +1,45 @@
-name: Release Obsidian plugin
+name: Release Obsidian Plugin
 
 on:
     push:
         tags:
-            - "*"
+            - "*" # triggers on any tag push
 
 jobs:
-    build:
+    release:
         runs-on: ubuntu-latest
         permissions:
             contents: write
         steps:
-            - uses: actions/checkout@v3
+            - name: Checkout repository
+              uses: actions/checkout@v3
 
-            - name: Use Node.js
+            - name: Setup Node.js
               uses: actions/setup-node@v3
               with:
                   node-version: "18.x"
 
-            - name: Build plugin
+            - name: Install dependencies & build
               run: |
                   npm install
                   npm run build
 
-            - name: Create release
+            - name: Install GitHub CLI
+              run: |
+                  sudo apt update
+                  sudo apt install gh -y
+
+            - name: Prepare plugin zip
+              run: |
+                  tag="${GITHUB_REF#refs/tags/}"
+                  zip "zenboard-${tag}.zip" main.js styles.css manifest.json
+
+            - name: Create GitHub release
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               run: |
                   tag="${GITHUB_REF#refs/tags/}"
-
                   gh release create "$tag" \
-                    --title="$tag" \
+                    --title "$tag" \
                     --draft \
-                    main.js manifest.json styles.css
+                    "plugin-${tag}.zip"
