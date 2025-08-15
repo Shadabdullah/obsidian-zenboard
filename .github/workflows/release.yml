@@ -8,27 +8,44 @@ on:
 jobs:
     release:
         runs-on: ubuntu-latest
+        permissions:
+            contents: write
         steps:
             - uses: actions/checkout@v4
 
-            - name: Setup Node
+            - name: Setup Node.js
               uses: actions/setup-node@v4
               with:
                   node-version: "20"
+                  cache: "npm"
 
-            - name: Install dependencies
-              run: npm install
-
-            - name: Build plugin
-              run: npm run build
-
-            - name: Verify files exist
+            - name: Install and build
               run: |
-                  [ -f main.js ] || exit 1
-                  [ -f manifest.json ] || exit 1
-                  [ -f styles.css ] || exit 1
+                  npm ci
+                  npm run build
 
-            - name: Create Release
+            - name: Package plugin
+              run: |
+                  # Verify files exist
+                  echo "Checking build files:"
+                  ls -la main.js manifest.json styles.css
+
+                  # Create plugin directory and copy files
+                  mkdir ${{ github.event.repository.name }}
+                  cp main.js manifest.json styles.css ${{ github.event.repository.name }}/
+
+                  # Create zip
+                  zip -r ${{ github.event.repository.name }}.zip ${{ github.event.repository.name }}
+
+                  # Verify zip was created and show contents
+                  echo "Created zip file:"
+                  ls -la ${{ github.event.repository.name }}.zip
+                  echo "Zip contents:"
+                  unzip -l ${{ github.event.repository.name }}.zip
+
+            - name: Create release
               uses: softprops/action-gh-release@v2
+              with:
+                  files: ${{ github.event.repository.name }}.zip
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
