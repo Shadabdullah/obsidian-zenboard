@@ -60,14 +60,14 @@ const HabitForm: React.FC<HabitFormModalProps> = ({ isOpen, onClose }) => {
 	]);
 	const [repeatability, setRepeatability] = useState("weekdays");
 	const [repeatInterval, setRepeatInterval] = useState(1);
-	const [selectedColor, setSelectedColor] = useState("#3B82F6");
+	const [selectedColor, setSelectedColor] = useState("var(--color-accent)");
 	const [selectedIcon, setSelectedIcon] = useState("Droplets");
 
 	// UI state
 	const [isRepeatDropdownOpen, setIsRepeatDropdownOpen] = useState(false);
 	const [showColorPicker, setShowColorPicker] = useState(false);
 	const [showIconPicker, setShowIconPicker] = useState(false);
-	const [customColor, setCustomColor] = useState("#3B82F6");
+	const [customColor, setCustomColor] = useState("var(--color-accent)");
 
 	// ==============================================================================================
 	// CONSTANTS
@@ -83,19 +83,20 @@ const HabitForm: React.FC<HabitFormModalProps> = ({ isOpen, onClose }) => {
 		{ key: "SU", label: "Sun", full: "Sunday" },
 	];
 
+	// Using Obsidian theme-compatible colors
 	const defaultColors = [
-		"#3B82F6",
-		"#10B981",
-		"#F59E0B",
-		"#EF4444",
-		"#8B5CF6",
-		"#EC4899",
-		"#06B6D4",
-		"#84CC16",
-		"#F97316",
-		"#6366F1",
-		"#14B8A6",
-		"#F43F5E",
+		"var(--color-accent)",
+		"var(--color-green)",
+		"var(--color-orange)",
+		"var(--color-red)",
+		"var(--color-purple)",
+		"var(--color-pink)",
+		"var(--color-cyan)",
+		"var(--color-base-35)",
+		"var(--color-base-50)",
+		"var(--color-base-70)",
+		"var(--interactive-accent)",
+		"var(--text-accent)",
 	];
 
 	const repeatOptions = [
@@ -115,17 +116,11 @@ const HabitForm: React.FC<HabitFormModalProps> = ({ isOpen, onClose }) => {
 	// ==============================================================================================
 	// EVENT HANDLERS
 	// ==============================================================================================
-	// === Helpers =====================================================================================
-
 	// === Component State =============================================================================
 	const [startDate, setStartDate] = useState(new Date());
 	const [endDate, setEndDate] = useState<Date | null>(null);
 
 	// === Event Handlers ==============================================================================
-
-	// ==============================================================================================
-	// DATE FUCNTIONS ENDS HERE
-	// ==============================================================================================
 
 	const toggleDay = (day: string) => {
 		setSelectedDays((prev) =>
@@ -203,7 +198,6 @@ const HabitForm: React.FC<HabitFormModalProps> = ({ isOpen, onClose }) => {
 	// ==============================================================================================
 	// UTILITY FUNCTIONS
 	// ==============================================================================================
-	//
 
 	const resetForm = () => {
 		setHabitName("");
@@ -213,7 +207,7 @@ const HabitForm: React.FC<HabitFormModalProps> = ({ isOpen, onClose }) => {
 		setSelectedDays(["MO", "TU", "WE", "TH", "FR", "SA", "SU"]);
 		setRepeatability("weekdays");
 		setRepeatInterval(1);
-		setSelectedColor("#3B82F6");
+		setSelectedColor("var(--color-accent)");
 		setSelectedIcon("Droplets");
 		setStartDate(new Date());
 		setEndDate(null);
@@ -305,12 +299,12 @@ const HabitForm: React.FC<HabitFormModalProps> = ({ isOpen, onClose }) => {
 			/>
 
 			{/* Main Modal Container */}
-			<div className="relative w-full max-w-4xl bg-primary rounded-3xl shadow-2xl transform transition-all duration-300 scale-100 opacity-100 max-h-[90vh] overflow-y-auto">
+			<div className="relative w-full max-w-4xl bg-primary rounded-l shadow-2xl transform transition-all duration-300 scale-100 opacity-100 max-h-[90vh] overflow-y-auto">
 				{/* ======================================================================================== */}
 				{/* MODAL HEADER */}
 				{/* ======================================================================================== */}
 
-				<div className="sticky top-0 z-10 flex items-center justify-between p-6 bg-primary border-b border-hover rounded-t-3xl">
+				<div className="sticky top-0 z-10 flex items-center justify-between p-6 bg-primary border-default rounded-t-l">
 					<h1 className="text-default text-xl font-semibold">
 						New Habit
 					</h1>
@@ -342,7 +336,7 @@ const HabitForm: React.FC<HabitFormModalProps> = ({ isOpen, onClose }) => {
 									type="text"
 									value={habitName}
 									onChange={(e) => setHabitName(e.target.value)}
-									className="w-full bg-secondary border-default rounded-xl px-4 py-3 text-default placeholder-muted focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+									className="w-full bg-secondary border-default rounded-m px-4 py-3 text-default placeholder-muted focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all duration-200"
 									placeholder="Enter habit name"
 								/>
 							</div>
@@ -358,8 +352,8 @@ const HabitForm: React.FC<HabitFormModalProps> = ({ isOpen, onClose }) => {
 										<button
 											key={type}
 											onClick={() => setTrackingType(type)}
-											className={`flex flex-col items-center justify-center py-4 rounded-xl transition-all duration-300 transform hover:scale-105 ${trackingType === type
-												? "bg-blue-500 text-white shadow-lg"
+											className={`flex flex-col items-center justify-center py-4 rounded-m transition-all duration-300 transform hover:scale-105 ${trackingType === type
+												? "btn-accent text-on-accent shadow-lg"
 												: "bg-secondary text-muted hover:bg-hover"
 												}`}
 										>
@@ -371,10 +365,10 @@ const HabitForm: React.FC<HabitFormModalProps> = ({ isOpen, onClose }) => {
 
 								{/* Time Value Input */}
 								{trackingType === "time" && (
-									<div className="relative flex items-center justify-between p-4 bg-secondary border-default rounded-xl">
+									<div className="relative flex items-center justify-between p-4 bg-secondary border-default rounded-m">
 										<button
 											onClick={() => handleDecrement(setTimeValue, timeValue)}
-											className="flex items-center justify-center w-12 h-12 rounded-xl bg-primary/80 hover:bg-primary hover:shadow-md transition-all duration-200 active:scale-95 border-hover"
+											className="flex items-center justify-center w-12 h-12 rounded-m bg-primary hover:bg-hover hover:shadow-md transition-all duration-200 active:scale-95 border-hover"
 										>
 											<Minus size={18} className="text-muted" />
 										</button>
@@ -391,7 +385,7 @@ const HabitForm: React.FC<HabitFormModalProps> = ({ isOpen, onClose }) => {
 													onChange={(e) =>
 														handleInputChange(setTimeValue, e.target.value)
 													}
-													className="bg-transparent text-default text-center text-2xl font-bold focus:outline-none w-16 border-b-2 border-transparent focus:border-blue-400 transition-all duration-300"
+													className="bg-transparent text-default text-center text-2xl font-bold focus:outline-none w-16 border-b-2 border-transparent focus:border-accent transition-all duration-300"
 													placeholder="15"
 													min="1"
 												/>
@@ -403,7 +397,7 @@ const HabitForm: React.FC<HabitFormModalProps> = ({ isOpen, onClose }) => {
 
 										<button
 											onClick={() => handleIncrement(setTimeValue, timeValue)}
-											className="flex items-center justify-center w-12 h-12 rounded-xl bg-primary/80 hover:bg-primary hover:shadow-md transition-all duration-200 active:scale-95 border-hover"
+											className="flex items-center justify-center w-12 h-12 rounded-m bg-primary hover:bg-hover hover:shadow-md transition-all duration-200 active:scale-95 border-hover"
 										>
 											<Plus size={18} className="text-muted" />
 										</button>
@@ -412,12 +406,12 @@ const HabitForm: React.FC<HabitFormModalProps> = ({ isOpen, onClose }) => {
 
 								{/* Amount Value Input */}
 								{trackingType === "amount" && (
-									<div className="relative flex items-center justify-between p-4 bg-secondary border-default rounded-xl">
+									<div className="relative flex items-center justify-between p-4 bg-secondary border-default rounded-m">
 										<button
 											onClick={() =>
 												handleDecrement(setTargetCount, targetCount)
 											}
-											className="flex items-center justify-center w-12 h-12 rounded-xl bg-primary/80 hover:bg-primary hover:shadow-md transition-all duration-200 active:scale-95 border-hover"
+											className="flex items-center justify-center w-12 h-12 rounded-m bg-primary hover:bg-hover hover:shadow-md transition-all duration-200 active:scale-95 border-hover"
 										>
 											<Minus size={18} className="text-muted" />
 										</button>
@@ -434,7 +428,7 @@ const HabitForm: React.FC<HabitFormModalProps> = ({ isOpen, onClose }) => {
 													onChange={(e) =>
 														handleInputChange(setTargetCount, e.target.value)
 													}
-													className="bg-transparent text-default text-center text-2xl font-bold focus:outline-none w-16 border-b-2 border-transparent focus:border-green-400 transition-all duration-300"
+													className="bg-transparent text-default text-center text-2xl font-bold focus:outline-none w-16 border-b-2 border-transparent focus:border-accent transition-all duration-300"
 													placeholder="1"
 													min="1"
 												/>
@@ -448,7 +442,7 @@ const HabitForm: React.FC<HabitFormModalProps> = ({ isOpen, onClose }) => {
 											onClick={() =>
 												handleIncrement(setTargetCount, targetCount)
 											}
-											className="flex items-center justify-center w-12 h-12 rounded-xl bg-primary/80 hover:bg-primary hover:shadow-md transition-all duration-200 active:scale-95 border-hover"
+											className="flex items-center justify-center w-12 h-12 rounded-m bg-primary hover:bg-hover hover:shadow-md transition-all duration-200 active:scale-95 border-hover"
 										>
 											<Plus size={18} className="text-muted" />
 										</button>
@@ -469,8 +463,8 @@ const HabitForm: React.FC<HabitFormModalProps> = ({ isOpen, onClose }) => {
 											<button
 												key={name}
 												onClick={() => setSelectedIcon(name)}
-												className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-200 hover:scale-110 ${selectedIcon === name
-													? "ring-2 ring-default ring-offset-2 ring-offset-primary"
+												className={`w-10 h-10 rounded-m flex items-center justify-center transition-all duration-200 hover:scale-110 ${selectedIcon === name
+													? "ring-2 ring-accent ring-offset-2 ring-offset-primary"
 													: "bg-secondary hover:bg-hover"
 													}`}
 											>
@@ -478,7 +472,7 @@ const HabitForm: React.FC<HabitFormModalProps> = ({ isOpen, onClose }) => {
 													size={18}
 													className={
 														selectedIcon === name
-															? "text-default"
+															? "text-accent"
 															: "text-muted"
 													}
 												/>
@@ -486,7 +480,7 @@ const HabitForm: React.FC<HabitFormModalProps> = ({ isOpen, onClose }) => {
 										))}
 										<button
 											onClick={() => setShowIconPicker(true)}
-											className="w-10 h-10 rounded-xl flex items-center justify-center bg-secondary text-muted hover:scale-110 transition-all duration-200"
+											className="w-10 h-10 rounded-m flex items-center justify-center bg-secondary text-muted hover:scale-110 transition-all duration-200"
 										>
 											<Plus size={18} />
 										</button>
@@ -496,18 +490,18 @@ const HabitForm: React.FC<HabitFormModalProps> = ({ isOpen, onClose }) => {
 								{/* Color Selection */}
 								<div className="flex items-center space-x-3">
 									<div
-										className="w-12 h-12 rounded-xl flex items-center justify-center text-white shadow-lg transition-transform duration-200 hover:scale-110"
+										className="w-12 h-12 rounded-m flex items-center justify-center text-on-accent shadow-lg transition-transform duration-200 hover:scale-110"
 										style={{ backgroundColor: selectedColor }}
 									>
 										{React.createElement(getSelectedIcon(), { size: 20 })}
 									</div>
 									<div className="flex items-center space-x-2">
-										{defaultColors.slice(0, 6).map((color) => (
+										{defaultColors.slice(0, 6).map((color, index) => (
 											<button
-												key={color}
+												key={index}
 												onClick={() => setSelectedColor(color)}
 												className={`w-8 h-8 rounded-m transition-all duration-200 hover:scale-110 ${selectedColor === color
-													? "ring-2 ring-default ring-offset-2 ring-offset-primary"
+													? "ring-2 ring-accent ring-offset-2 ring-offset-primary"
 													: ""
 													}`}
 												style={{ backgroundColor: color }}
@@ -540,7 +534,7 @@ const HabitForm: React.FC<HabitFormModalProps> = ({ isOpen, onClose }) => {
 										onClick={() =>
 											setIsRepeatDropdownOpen(!isRepeatDropdownOpen)
 										}
-										className="w-full flex items-center justify-between bg-secondary border-default rounded-xl px-4 py-3 text-default transition-all duration-200 hover:bg-opacity-80"
+										className="w-full flex items-center justify-between bg-secondary border-default rounded-m px-4 py-3 text-default transition-all duration-200 hover:bg-hover"
 									>
 										<span>
 											{
@@ -555,14 +549,14 @@ const HabitForm: React.FC<HabitFormModalProps> = ({ isOpen, onClose }) => {
 									</button>
 
 									{isRepeatDropdownOpen && (
-										<div className="absolute top-full left-0 right-0 mt-2 bg-primary border-default rounded-xl shadow-lg z-20 overflow-hidden">
+										<div className="absolute top-full left-0 right-0 mt-2 bg-primary border-default rounded-m shadow-lg z-20 overflow-hidden">
 											{repeatOptions.map((option) => (
 												<button
 													key={option.value}
 													onClick={() =>
 														handleRepeatabilityChange(option.value)
 													}
-													className="w-full text-left px-4 py-3 text-default hover:bg-blue-500 hover:text-white transition-colors duration-150"
+													className="w-full text-left px-4 py-3 text-default hover:bg-active-hover hover:text-accent transition-colors duration-150"
 												>
 													{option.label}
 												</button>
@@ -573,7 +567,7 @@ const HabitForm: React.FC<HabitFormModalProps> = ({ isOpen, onClose }) => {
 
 								{/* Every Few Days Interval */}
 								{repeatability === "every_few_days" && (
-									<div className="flex items-center justify-center py-3 bg-secondary border-default rounded-xl">
+									<div className="flex items-center justify-center py-3 bg-secondary border-default rounded-m">
 										<span className="text-default mr-2">
 											Every
 										</span>
@@ -606,7 +600,7 @@ const HabitForm: React.FC<HabitFormModalProps> = ({ isOpen, onClose }) => {
 															: setSelectedDays([key])
 													}
 													className={`px-3 py-2 rounded-m text-sm font-medium transition-all duration-300 transform hover:scale-105 ${selectedDays.includes(key)
-														? "bg-blue-500 text-white shadow-lg"
+														? "btn-accent text-on-accent shadow-lg"
 														: "bg-secondary text-muted hover:bg-hover"
 														}`}
 												>
@@ -622,7 +616,7 @@ const HabitForm: React.FC<HabitFormModalProps> = ({ isOpen, onClose }) => {
 								<label className="text-muted text-sm font-medium">
 									Reminders
 								</label>
-								<button className="w-full flex items-center justify-center bg-secondary rounded-xl px-4 py-3 text-muted hover:bg-hover transition-all duration-200">
+								<button className="w-full flex items-center justify-center bg-secondary rounded-m px-4 py-3 text-muted hover:bg-hover transition-all duration-200">
 									<Bell size={20} className="mr-2" />
 									This feature is coming soon
 								</button>
@@ -637,8 +631,6 @@ const HabitForm: React.FC<HabitFormModalProps> = ({ isOpen, onClose }) => {
 									onEndDateChange={setEndDate}
 								/>
 							</div>
-
-							{/* Selected Date Range Display */}
 						</div>
 					</div>
 
@@ -649,14 +641,14 @@ const HabitForm: React.FC<HabitFormModalProps> = ({ isOpen, onClose }) => {
 					<div className="mt-8 flex justify-end space-x-4">
 						<button
 							onClick={onClose}
-							className="px-6 py-3 bg-secondary text-muted hover:bg-hover font-medium rounded-xl transition-all duration-300 transform hover:scale-105"
+							className="px-6 py-3 bg-secondary text-muted hover:bg-hover font-medium rounded-m transition-all duration-300 transform hover:scale-105"
 						>
 							Cancel
 						</button>
 						<button
 							onClick={handleSave}
 							disabled={!habitName.trim()}
-							className="px-8 py-3 bg-blue-500 text-white font-semibold rounded-xl transition-all duration-300 transform hover:bg-blue-600 hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
+							className="px-8 py-3 btn-accent font-semibold rounded-m transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
 						>
 							Save
 						</button>
@@ -674,17 +666,17 @@ const HabitForm: React.FC<HabitFormModalProps> = ({ isOpen, onClose }) => {
 						className="fixed inset-0 bg-black bg-opacity-40 backdrop-blur-sm"
 						onClick={() => setShowColorPicker(false)}
 					/>
-					<div className="relative bg-primary rounded-2xl shadow-2xl p-6 max-w-sm w-full">
+					<div className="relative bg-primary rounded-l shadow-2xl p-6 max-w-sm w-full">
 						<h3 className="text-default text-lg font-semibold mb-4">
 							Choose Color
 						</h3>
 						<div className="grid grid-cols-4 gap-3 mb-4">
-							{defaultColors.map((color) => (
+							{defaultColors.map((color, index) => (
 								<button
-									key={color}
+									key={index}
 									onClick={() => handleColorSelect(color)}
-									className={`w-12 h-12 rounded-xl transition-transform duration-200 hover:scale-110 ${selectedColor === color
-										? "ring-2 ring-default ring-offset-2 ring-offset-primary"
+									className={`w-12 h-12 rounded-m transition-transform duration-200 hover:scale-110 ${selectedColor === color
+										? "ring-2 ring-accent ring-offset-2 ring-offset-primary"
 										: ""
 										}`}
 									style={{ backgroundColor: color }}
@@ -704,7 +696,7 @@ const HabitForm: React.FC<HabitFormModalProps> = ({ isOpen, onClose }) => {
 								/>
 								<button
 									onClick={handleCustomColorSelect}
-									className="px-4 py-2 bg-blue-500 text-white rounded-m hover:bg-blue-600 transition-colors"
+									className="px-4 py-2 btn-accent rounded-m transition-colors"
 								>
 									Select
 								</button>
@@ -724,7 +716,7 @@ const HabitForm: React.FC<HabitFormModalProps> = ({ isOpen, onClose }) => {
 						className="fixed inset-0 bg-black bg-opacity-40 backdrop-blur-sm"
 						onClick={() => setShowIconPicker(false)}
 					/>
-					<div className="relative bg-primary rounded-2xl shadow-2xl p-6 max-w-lg w-full max-h-96 overflow-y-auto">
+					<div className="relative bg-primary rounded-l shadow-2xl p-6 max-w-lg w-full max-h-96 overflow-y-auto">
 						<h3 className="text-default text-lg font-semibold mb-4">
 							Choose Icon
 						</h3>
@@ -733,8 +725,8 @@ const HabitForm: React.FC<HabitFormModalProps> = ({ isOpen, onClose }) => {
 								<button
 									key={name}
 									onClick={() => handleIconSelect(name)}
-									className={`w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-200 hover:scale-110 ${selectedIcon === name
-										? "ring-2 ring-default ring-offset-2 ring-offset-primary bg-blue-500"
+									className={`w-12 h-12 rounded-m flex items-center justify-center transition-all duration-200 hover:scale-110 ${selectedIcon === name
+										? "ring-2 ring-accent ring-offset-2 ring-offset-primary btn-accent"
 										: "bg-secondary hover:bg-hover"
 										}`}
 								>
@@ -742,7 +734,7 @@ const HabitForm: React.FC<HabitFormModalProps> = ({ isOpen, onClose }) => {
 										size={20}
 										className={
 											selectedIcon === name
-												? "text-white"
+												? "text-on-accent"
 												: "text-muted"
 										}
 									/>

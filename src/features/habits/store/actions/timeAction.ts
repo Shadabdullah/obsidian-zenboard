@@ -74,7 +74,6 @@ export const createTimeAction: StateCreator<
 					const updatedStat: HabitStatEntry = { t: "time", v: newElapsed };
 					updateHabitStat(taskId, today, updatedStat);
 					lastSyncedTimestamps.set(taskId, Date.now());
-					console.log("⏸ PAUSE: Synced to DB:", updatedStat);
 				}
 			}
 
@@ -155,7 +154,6 @@ export const createTimeAction: StateCreator<
 				if (shouldStop || now - lastSynced >= 15000) {
 					updateHabitStat(taskId, today, updatedStat);
 					lastSyncedTimestamps.set(taskId, now);
-					console.log("⏰ TIMER: Synced to DB:", updatedStat);
 				}
 
 				// Stop timer if target reached
@@ -165,7 +163,6 @@ export const createTimeAction: StateCreator<
 						clearInterval(runningInterval);
 						timerIntervals.delete(taskId);
 					}
-					console.log("🎯 TIMER: Target reached, stopped");
 				}
 			}, 1000);
 
@@ -223,7 +220,6 @@ export const createTimeAction: StateCreator<
 
 		// Sync reset to database
 		updateHabitStat(taskId, today, updatedStat);
-		console.log("🧼 RESET: Updated DB with 0");
 
 		recomputeDerivedState();
 	},
@@ -236,7 +232,6 @@ export const clearAllTimers = () => {
 	}
 	timerIntervals.clear();
 	lastSyncedTimestamps.clear();
-	console.log("🧹 CLEANUP: All timers cleared");
 };
 
 // Export types - you'll need to add initializeTimerElapsed to your TimeActionSlice type
