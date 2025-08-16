@@ -26,7 +26,12 @@ jobs:
               run: |
                   [ -f main.js ] || exit 1
                   [ -f manifest.json ] || exit 1
+
                   [ -f styles.css ] || exit 1
+
+                  mkdir ${{ github.event.repository.name }}
+                  cp main.js manifest.json styles.css ${{ github.event.repository.name }}/
+                  zip -r ${{ github.event.repository.name }}.zip ${{ github.event.repository.name }}
 
             - name: Create Release
               uses: softprops/action-gh-release@v2
@@ -35,6 +40,7 @@ jobs:
                       main.js
                       manifest.json
                       styles.css
+                      ${{ github.event.repository.name }}.zip
                   generate_release_notes: true
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
