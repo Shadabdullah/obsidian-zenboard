@@ -16,7 +16,7 @@ export class ZenboardDashboardView extends ItemView {
 	}
 
 	getDisplayText(): string {
-		return "📋 Zenboard";
+		return "Zenboard";
 	}
 
 	getIcon(): string {

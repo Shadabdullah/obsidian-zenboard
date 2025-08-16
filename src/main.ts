@@ -16,7 +16,7 @@ export default class ZenboardPlugin extends Plugin {
 		// Ribbon icon to open React pane
 		const ribbonIconEl = this.addRibbonIcon(
 			'target',
-			'Zenboard: open dashboard',
+			'Zenboard: Open dashboard',
 			async () => {
 				await this.activateDashboardView();
 			}
@@ -26,7 +26,7 @@ export default class ZenboardPlugin extends Plugin {
 		// Add command to open dashboard
 		this.addCommand({
 			id: 'open-dashboard',
-			name: 'Open zenboard',
+			name: 'Open Zenboard',
 			callback: async () => {
 				await this.activateDashboardView();
 			}
@@ -34,15 +34,33 @@ export default class ZenboardPlugin extends Plugin {
 	}
 
 	async activateDashboardView() {
+		// Check if view already exists
+		const existingLeaves = this.app.workspace.getLeavesOfType(VIEW_TYPE_ZENBOARD);
+
+		if (existingLeaves.length > 0) {
+			// If view exists, just activate it
+			this.app.workspace.revealLeaf(existingLeaves[0]);
+			return;
+		}
+
+		// Create new leaf if none exists
 		const leaf = this.app.workspace.getLeaf(false);
-		if (!leaf) return; // No console output, just fail silently for users
-		await leaf.setViewState({
-			type: VIEW_TYPE_ZENBOARD,
-			active: true,
-		});
+		if (!leaf) {
+			return;
+		}
+
+		try {
+			await leaf.setViewState({
+				type: VIEW_TYPE_ZENBOARD,
+				active: true,
+			});
+		} catch (error) {
+			console.error('Failed to activate Zenboard view:', error);
+		}
 	}
 
 	onunload() {
+		// Clean up all instances of the view
 		this.app.workspace.detachLeavesOfType(VIEW_TYPE_ZENBOARD);
 	}
 }
