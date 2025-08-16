@@ -1,38 +1,42 @@
 name: Release Obsidian Plugin
-
 on:
     push:
         tags:
             - "*"
-
 jobs:
     release:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v4
-
             - name: Setup Node
               uses: actions/setup-node@v4
               with:
                   node-version: "20"
-
             - name: Install dependencies
               run: npm install
-
             - name: Build plugin
               run: npm run build
-
-            - name: Verify files
+            - name: Create release package
               run: |
-                  [ -f main.js ] || exit 1
-                  [ -f manifest.json ] || exit 1
+                  # Verify required files exist
+                  [ -f main.js ] || { echo "main.js not found"; exit 1; }
+                  [ -f manifest.json ] || { echo "manifest.json not found"; exit 1; }
+                  [ -f styles.css ] || { echo "styles.css not found"; exit 1; }
 
-                  [ -f styles.css ] || exit 1
+                  # Create directory and copy files
+                  PLUGIN_NAME="${{ github.event.repository.name }}"
+                  mkdir -p "${PLUGIN_NAME}"
+                  cp main.js manifest.json styles.css "${PLUGIN_NAME}/"
 
-                  mkdir ${{ github.event.repository.name }}
-                  cp main.js manifest.json styles.css ${{ github.event.repository.name }}/
-                  zip -r ${{ github.event.repository.name }}.zip ${{ github.event.repository.name }}
+                  # Create zip file
+                  zip -r "${PLUGIN_NAME}.zip" "${PLUGIN_NAME}"
 
+                  # Verify zip was created
+                  [ -f "${PLUGIN_NAME}.zip" ] || { echo "Zip file creation failed"; exit 1; }
+
+                  # List files for debugging
+                  echo "Files created:"
+                  ls -la *.zip
             - name: Create Release
               uses: softprops/action-gh-release@v2
               with:
