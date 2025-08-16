@@ -22,7 +22,7 @@ jobs:
             - name: Build plugin
               run: npm run build
 
-            - name: Verify files exist
+            - name: Verify files
               run: |
                   [ -f main.js ] || exit 1
                   [ -f manifest.json ] || exit 1
