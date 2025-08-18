@@ -1,6 +1,7 @@
 import { Plugin } from 'obsidian';
 import { initStorage } from '@features/habits/utils';
 import { ZenboardDashboardView, VIEW_TYPE_ZENBOARD } from './views/ZenboardView';
+import { clearAllTimers } from '@habits/store//actions';
 
 export default class ZenboardPlugin extends Plugin {
 	async onload() {
@@ -60,7 +61,7 @@ export default class ZenboardPlugin extends Plugin {
 	}
 
 	onunload() {
-		// Clean up all instances of the view
-		this.app.workspace.detachLeavesOfType(VIEW_TYPE_ZENBOARD);
+		// Clear Timers
+		clearAllTimers()
 	}
 }
